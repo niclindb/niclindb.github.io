@@ -3,7 +3,7 @@ import Bubble from './bubble'
 import { useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 
-const bubblePositions = [
+export const bubblePositions = [
     { // center
       position: [0, -.5, 0.25], 
       scale: 1.35,
