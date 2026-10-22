@@ -4,7 +4,7 @@ React + react-three-fiber site, built with [Vite](https://vite.dev). Live at htt
 
 ## Scripts
 
-- `npm run dev` starts the dev server at http://localhost:5173/portfolio/
+- `npm run dev` starts the dev server at http://localhost:5173/
 - `npm test` runs the tests with Vitest
 - `npm run build` writes a production build to `dist/`
 - `npm run preview` serves the production build locally
