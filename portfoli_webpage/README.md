@@ -1,6 +1,6 @@
 # Portfolio webpage
 
-React + react-three-fiber site, built with [Vite](https://vite.dev). Live at https://niclindb.github.io/portfolio/.
+React + react-three-fiber site, built with [Vite](https://vite.dev). Live at https://niclindb.github.io/.
 
 ## Scripts
 
