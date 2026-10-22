@@ -26,7 +26,7 @@ export default function Header() {
     },
     {
       name: 'Resume', 
-      url: 'https://niclindb.github.io/portfolio/Resume.pdf', 
+      url: `${import.meta.env.BASE_URL}Resume.pdf`, 
       icon: ( 
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
           <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
