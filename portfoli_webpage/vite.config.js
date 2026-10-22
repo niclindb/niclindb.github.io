@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Served from https://niclindb.github.io/portfolio/
+// Served from the root of the domain
 export default defineConfig({
-  base: '/portfolio/',
+  base: '/',
   plugins: [react()],
   test: {
     environment: 'jsdom',
