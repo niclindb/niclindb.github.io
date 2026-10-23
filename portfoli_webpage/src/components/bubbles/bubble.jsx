@@ -25,21 +25,44 @@ export default function Bubble({
   const body = useRef();
   const { camera, size } = useThree();
 
-  const [{ scale, opacity }, api] = useSpring(() => ({
-    scale: baseScale,
-    opacity: 1,
-    config: { mass: 1, tension: 300, friction: 22 },
-  }));
+  const [{ scale }, api] = useSpring(() => ({ scale: baseScale }));
+
+  const hidden = isSelected || isOtherSelected;
+  const [gone, setGone] = useState(false);
+
+  // While a section is open every bubble is gone: the popped one bursts at
+  // once and the rest vanish once the gum bubble has covered them, leaving
+  // only what was inside. On Back they blow back up one after another.
+  useEffect(() => {
+    if (!hidden) return undefined;
+    const timer = setTimeout(() => {
+      setGone(true);
+      api.set({ scale: 0.001 });
+    }, isSelected ? 0 : 400);
+    return () => clearTimeout(timer);
+  }, [hidden, isSelected, api]);
 
   useEffect(() => {
+    if (hidden || !gone) return;
+    setGone(false);
     api.start({
-      // The selected bubble vanishes at once: the full-screen pop takes over
-      scale: isSelected ? 0.001 : isOtherSelected ? baseScale * 0.85 : hovered ? baseScale * 1.08 : baseScale,
-      opacity: isOtherSelected ? 0.25 : 1,
-      immediate: (key) => isSelected && key === 'scale',
+      scale: baseScale,
+      delay: 150 + phase * 50,
       config: { mass: 1.2, tension: 220, friction: 14 },
     });
-  }, [isSelected, isOtherSelected, hovered, baseScale, api]);
+  }, [hidden, gone, baseScale, phase, api]);
+
+  // Only react to hover changes, so this doesn't cut the reinflate short
+  const wasHovered = useRef(hovered);
+  useEffect(() => {
+    if (wasHovered.current === hovered) return;
+    wasHovered.current = hovered;
+    if (hidden) return;
+    api.start({
+      scale: hovered ? baseScale * 1.08 : baseScale,
+      config: { mass: 1.2, tension: 220, friction: 14 },
+    });
+  }, [hidden, hovered, baseScale, api]);
 
   // Bubbles drift on the air and their skin wobbles, but each stays near
   // its spot in the grid.
@@ -76,7 +99,7 @@ export default function Bubble({
     <group ref={drift} position={position} {...props}>
       <animated.group
         scale={scale}
-        visible={!isSelected}
+        visible={!gone && !isSelected}
         onPointerOver={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = 'pointer'; }}
         onPointerOut={() => { setHovered(false); document.body.style.cursor = ''; }}
         onClick={handleClick}
@@ -97,12 +120,11 @@ export default function Bubble({
               clearcoatRoughness={0}
               envMapIntensity={1.5}
               transparent={true}
-              opacity={opacity}
               depthWrite={false}
             />
           </mesh>
         </group>
-        {children && !isOtherSelected && (
+        {children && (
           <Text
             font={labelFont}
             fontSize={0.3}

@@ -19,11 +19,44 @@
   flex-direction: column;
   box-sizing: border-box;
   pointer-events: auto;
-  animation: panel-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  /* No box: the content floats free, as if it had been inside the bubble.
+     A soft glow behind it keeps the text readable on the sky. */
+  padding: 8px 4px;
+  line-height: 1.6;
+  color: var(--ink);
 }
 
-@keyframes panel-in {
-  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: -12% -18%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0));
+  animation: spill-glow 0.7s ease-out both;
+}
+
+/* Each piece spills out of the pop one after another */
+.panel > *,
+.panel__body > * {
+  animation: spill-out 0.55s cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
+}
+
+.panel__body > :nth-child(1) { animation-delay: 0.05s; }
+.panel__body > :nth-child(2) { animation-delay: 0.1s; }
+.panel__body > :nth-child(3) { animation-delay: 0.15s; }
+.panel__body > :nth-child(4) { animation-delay: 0.2s; }
+.panel__body > :nth-child(5) { animation-delay: 0.25s; }
+.panel__body > :nth-child(n + 6) { animation-delay: 0.3s; }
+.panel > .panel__body { animation: none; }
+.panel > .panel__nav { animation-delay: 0.35s; }
+
+@keyframes spill-out {
+  from { opacity: 0; transform: scale(0.6); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes spill-glow {
+  from { opacity: 0; transform: scale(0.3); }
   to { opacity: 1; transform: none; }
 }
 
@@ -64,7 +97,7 @@
   gap: 12px;
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid rgba(35, 36, 77, 0.1);
+  border-top: 1px solid rgba(35, 36, 77, 0.15);
 }
 
 .panel__nav button {
@@ -77,7 +110,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .panel {
+  .panel::before,
+  .panel > *,
+  .panel__body > * {
     animation: none;
   }
 }
@@ -85,6 +120,5 @@
 @media (max-width: 640px) {
   .panel-layer {
     padding-top: 84px;
-    align-items: flex-end;
   }
 }
