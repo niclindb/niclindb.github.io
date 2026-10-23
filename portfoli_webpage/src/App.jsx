@@ -5,6 +5,7 @@ import {
 } from '@react-three/drei'
 import BubbleGroup from './components/bubbles/bubbleGroup'
 import Header from './components/Header/Header'
+import SceneErrorBoundary from './components/SceneFallback/SceneFallback'
 import { useState } from 'react';
 
 export default function App() {
@@ -24,16 +25,18 @@ export default function App() {
       <Header />
       
       {/* Three.js Canvas */}
-      <Canvas camera={{ fov: 100 }}>
-        <ambientLight intensity={0.3} />
-        <BubbleGroup 
-          onBubbleSelect={handleBubbleSelect} 
-          selectedBubble={selectedBubble} 
-        />
-        <Environment preset="dawn" background blur={0.5} />
-        <OrbitControls/>
+      <SceneErrorBoundary>
+        <Canvas camera={{ fov: 100 }}>
+          <ambientLight intensity={0.3} />
+          <BubbleGroup 
+            onBubbleSelect={handleBubbleSelect} 
+            selectedBubble={selectedBubble} 
+          />
+          <Environment preset="dawn" background blur={0.5} />
+          <OrbitControls/>
         
-      </Canvas>
+        </Canvas>
+      </SceneErrorBoundary>
       
       {/* Back button - rendered in regular DOM */}
       {selectedBubble !== null && (
