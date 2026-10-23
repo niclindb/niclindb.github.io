@@ -1,112 +1,41 @@
 .header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 16px;
+  left: 16px;
+  right: 16px;
   z-index: 1000;
-  background: rgba(26, 26, 46, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 1rem 0;
-  overflow: hidden;
-}
-
-.header--scrolled {
-  background: rgba(26, 26, 46, 0.98);
-  backdrop-filter: blur(25px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  padding: 0.75rem 0;
-}
-
-.header--hovered {
-  background: rgba(26, 26, 46, 0.99);
-  backdrop-filter: blur(30px);
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .header__content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  z-index: 2;
-}
-
-.header__title {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 14px 12px 24px;
 }
 
 .header__name {
   margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.header__name-text {
-  position: relative;
-  z-index: 2;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transition: all 0.3s ease;
-}
-
-.header__name-underline {
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #6C4F8C, #8B5CF6);
-  border-radius: 2px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.header:hover .header__name-underline {
-  width: 100%;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 .header__subtitle {
-  margin: 0.25rem 0 0 0;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.header__subtitle-text {
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
-}
-
-.header__subtitle-dot {
-  color: #6C4F8C;
-  font-weight: 700;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.header__nav {
-  display: flex;
-  align-items: center;
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
 }
 
 .header__social-links {
@@ -114,139 +43,71 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1.5rem;
+  gap: 8px;
 }
 
 .header__social-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  color: rgba(255, 255, 255, 0.8);
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: var(--ink);
   text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
   font-size: 0.9rem;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .header__social-link:hover {
-  color: #ffffff;
-  background: rgba(108, 79, 140, 0.2);
-  border-color: rgba(108, 79, 140, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(108, 79, 140, 0.3);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
-.header__social-link:focus {
-  outline: 2px solid rgba(108, 79, 140, 0.6);
-  outline-offset: 2px;
+.header__social-link--primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.header__social-link--primary:hover {
+  background: #5a3ec4;
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .header__social-icon {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
 }
 
-.header__social-link:hover .header__social-icon {
-  transform: scale(1.1);
-}
+@media (max-width: 640px) {
+  .header {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    border-radius: 16px;
+  }
 
-.header__social-text {
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-.header__social-hover-effect {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.6s ease;
-}
-
-.header__social-link:hover .header__social-hover-effect {
-  left: 100%;
-}
-
-/* Back button variant: match header background */
-.header__social-link.back-button {
-  background: rgba(26, 26, 46, 0.95);
-  border-color: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
-}
-
-.header__social-link.back-button:hover {
-  background: rgba(26, 26, 46, 0.99);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  transform: translateY(-2px);
-}
-
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-20px) scale(1.05); }
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
   .header__content {
-    padding: 0 1rem;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
+    padding: 8px 8px 8px 16px;
   }
-  
-  .header__title {
-    align-items: center;
-  }
-  
+
   .header__name {
-    font-size: 1.75rem;
+    font-size: 1.15rem;
   }
-  
+
   .header__subtitle {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
-  
+
   .header__social-links {
-    gap: 1rem;
+    gap: 4px;
   }
-  
+
   .header__social-link {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
+    padding: 10px;
   }
-  
+
   .header__social-text {
     display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .header {
-    padding: 0.75rem 0;
-  }
-  
-  .header__name {
-    font-size: 1.5rem;
-  }
-  
-  .header__subtitle {
-    font-size: 0.9rem;
-  }
-  
-  .header__social-links {
-    gap: 0.75rem;
   }
 }

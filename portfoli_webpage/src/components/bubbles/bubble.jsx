@@ -2,6 +2,7 @@ import { MeshDistortMaterial, Text } from '@react-three/drei'
 import * as THREE from 'three';
 import { useState } from 'react';
 import { useSpring, animated } from '@react-spring/three';
+import labelFont from '@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff?url';
 
 const AnimatedMeshDistortMaterial = animated(MeshDistortMaterial);
 
@@ -11,22 +12,17 @@ export default function Bubble({
   position = [0, 0, 0],
   isSelected,
   isOtherSelected,
-  moreText,
   onClick,
   ...props 
 }) {
   const [hovered, setHovered] = useState(false);
-
-  // Calculate the Y position for the text
-  const textYPosition = isSelected ? 0.9 : 0.2;
-  const fontSize = isSelected ? .2 : .4
 
   // Calculate animation values
   const { scale, pos, opacity } = useSpring({
     scale: isSelected ? baseScale * 40 : isOtherSelected ? baseScale * 3 : hovered ? baseScale * 1.15 : baseScale,
     pos: isSelected ? [0, 0, -60] : isOtherSelected ? [
       position[0] * 15,
-      position[1] === -.5 ? (position[1] - 5.5) * 7 : position[1] * 7, 
+      position[0] === 0 ? (position[1] - 5.5) * 7 : position[1] * 7, 
       position[2] - 15
     ] : position,
     opacity: isOtherSelected ? 0.3 : 1,
@@ -38,10 +34,9 @@ export default function Bubble({
       {...props}
       scale={scale}
       position={pos}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
+      onPointerOver={() => { setHovered(true); document.body.style.cursor = 'pointer'; }}
+      onPointerOut={() => { setHovered(false); document.body.style.cursor = ''; }}
       onClick={onClick}
-      cursor="pointer"
     >
       <animated.mesh>
         <sphereGeometry args={[1, 64, 64]} />
@@ -61,32 +56,20 @@ export default function Bubble({
           depthWrite={false}
         />
       </animated.mesh>
-      {children && (
+      {children && !isSelected && (
         <Text
-          fontSize={fontSize}
-          color="#3A3A6A"
-          position={[0, textYPosition, 0.0]}
+          font={labelFont}
+          fontSize={0.34}
+          color="#23244d"
+          position={[0, 0.15, 0]}
           anchorX="center"
           anchorY="middle"
           maxWidth={1.5}
+          lineHeight={1.1}
           textAlign="center"
           side={THREE.DoubleSide}
         >
           {children}
-        </Text>
-      )}
-      {isSelected && moreText && (
-        <Text
-          fontSize={0.105}
-          color="#3A3A6A"
-          position={[0.1, 0, 0.0]}
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={2}
-          textAlign="left"
-          side={THREE.DoubleSide}
-        >
-          {moreText}
         </Text>
       )}
     </animated.group>

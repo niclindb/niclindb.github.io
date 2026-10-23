@@ -2,57 +2,35 @@ import { Float } from '@react-three/drei'
 import Bubble from './bubble'
 import { useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
+import { sections } from '../../content';
 
-export const bubblePositions = [
-    { // center
-      position: [0, -.5, 0.25], 
-      scale: 1.35,
-      floatIntensity: 2.3,
-      speed: 1.2,
-      rotationIntensity: .8,
-      text: "About Me",
-      moreText: "I’m a passionate developer with experience in Java, C++, Python, and JavaScript. I enjoy solving problems through clean, efficient code and building applications that are both creative and practical. I’m always exploring new tools and technologies to expand my skillset and bring fresh ideas to life."
-    },
-    { // left
-      position: [-3.1, 1.1, 0], 
-      scale: 1.1,
-      floatIntensity: 2.7,
-      speed: 1.2,
-      rotationIntensity: .8,
-      text: "React Project",
-      moreText: "Custom Shopify Extensions\n   Stack: React, JavaScript, Shopify GraphQL\nFeatures: \n • Product price look-up\n • Inventory management\n • Charge Orders\n • Barcode Printing\n Check out more on my GitHub!"
-    },
-    { // right
-      position: [2.7, -1.8, 0], 
-      scale: 1.15,
-      floatIntensity: 2.4,
-      speed: 1.2,
-      rotationIntensity: .8,
-      text: "C++ Project",
-      moreText: "Parallel Merge Sort\n   Stack: C++ \nFeatures:\n • Efficiently sorts large datasets using parallel processing\n • Demonstrates proficiency in C++ and parallel computing concepts\n\n   Check out more on my GitHub!"
-    },
-    { // top
-      position: [2.48, 1.2, 0.1], 
-      scale: 1.1,
-      floatIntensity: 2.1,
-      speed: 1.2,
-      rotationIntensity: .8,
-      text: "Skills",
-      moreText: "Backend: Node.js, Python, SQL \nFrontend: React, TypeScript, HTML \nOther Languages: Java, C++ \nTools & Platforms: Git, Docker, AWS" 
-    },
-    { // bottom left
-      position: [-2.6, -1.9, 0.1], 
-      scale: 1.1,
-      floatIntensity: 2.3,
-      speed: 1.3,
-      rotationIntensity: .8,
-      text: "Education",
-      moreText: "Northern Michigan University \n\nBachelors degree in Computer Science, Minor in Mathematics"
-    },
-  ]
+// Index i of each layout is the bubble for sections[i] in content.js.
+const motion = { speed: 1.2, rotationIntensity: 0.8 };
+
+// Landscape screens: bubbles spread around "About Me" in the middle.
+const wideLayout = [
+  { position: [0, -0.5, 0.25], scale: 1.35, floatIntensity: 2.3 }, // center
+  { position: [-3.1, 1.1, 0], scale: 1.1, floatIntensity: 2.7 }, // top left
+  { position: [2.7, -1.8, 0], scale: 1.15, floatIntensity: 2.4 }, // bottom right
+  { position: [2.48, 1.2, 0.1], scale: 1.1, floatIntensity: 2.1 }, // top right
+  { position: [-2.6, -1.9, 0.1], scale: 1.1, floatIntensity: 2.3 }, // bottom left
+];
+
+// Portrait screens (phones): a narrower zig-zag column so nothing is cut off.
+const tallLayout = [
+  { position: [0, -0.2, 0.25], scale: 1.05, floatIntensity: 1.2 },
+  { position: [-1.05, 2.2, 0], scale: 0.9, floatIntensity: 1.2 },
+  { position: [1.05, -2.6, 0], scale: 0.9, floatIntensity: 1.2 },
+  { position: [1.05, 1.9, 0.1], scale: 0.9, floatIntensity: 1.2 },
+  { position: [-1.05, -2.9, 0.1], scale: 0.9, floatIntensity: 1.2 },
+];
+
+const HOME_Z = 7;
+const SELECTED_Z = 30;
 
 export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
+  const layout = size.width / size.height < 0.8 ? tallLayout : wideLayout;
   
   // Animate camera when selection changes
   useEffect(() => {
@@ -68,8 +46,8 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
     
     // Target position based on selection
     const targetPosition = selectedBubble !== null 
-      ? { x: 0, y: 0, z: 30 }  // Zoom in to selected bubble
-      : { x: 0, y: 0, z: 5 };  // Reset to center view
+      ? { x: 0, y: 0, z: SELECTED_Z }  // Zoom in to selected bubble
+      : { x: 0, y: 0, z: HOME_Z };  // Reset to center view
     
     const animate = () => {
       const elapsed = Date.now() - startTime;
@@ -97,7 +75,7 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
 
   return (
     <>
-      {bubblePositions.map((bubble, index) => {
+      {layout.map((bubble, index) => {
         const bubbleComponent = (
           <Bubble 
             scale={bubble.scale} 
@@ -105,9 +83,8 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
             isSelected={selectedBubble === index}
             isOtherSelected={selectedBubble !== null && selectedBubble !== index}
             onClick={() => handleBubbleClick(index)}
-            moreText={bubble.moreText}
           >
-            {bubble.text}
+            {sections[index].label}
           </Bubble>
         );
 
@@ -115,8 +92,8 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
           <Float 
             key={index}
             floatIntensity={bubble.floatIntensity}
-            speed={bubble.speed}
-            rotationIntensity={bubble.rotationIntensity}
+            speed={motion.speed}
+            rotationIntensity={motion.rotationIntensity}
             enabled={selectedBubble !== index} // Disable float for selected bubble
           >
             {bubbleComponent}
