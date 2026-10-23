@@ -19,7 +19,8 @@
   flex-direction: column;
   box-sizing: border-box;
   pointer-events: auto;
-  animation: panel-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  /* Starts once the bubble has popped */
+  animation: panel-in 0.45s 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @keyframes panel-in {

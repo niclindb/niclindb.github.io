@@ -1,8 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import {
-  Environment,
-  OrbitControls,
-} from '@react-three/drei'
+import { Environment } from '@react-three/drei'
 import BubbleGroup from './components/bubbles/bubbleGroup'
 import Header from './components/Header/Header'
 import ContentPanel from './components/ContentPanel/ContentPanel'
@@ -26,22 +23,18 @@ export default function App() {
       <Header />
 
       <SceneErrorBoundary>
-        <Canvas camera={{ fov: 70, position: [0, 0, 7] }}>
+        {/* A narrow fov keeps the bubbles round at the edges of the screen */}
+        <Canvas camera={{ fov: 35, position: [0, 0, 14] }}>
           <ambientLight intensity={0.3} />
           <BubbleGroup 
             onBubbleSelect={handleBubbleSelect} 
             selectedBubble={selectedBubble} 
           />
           <Environment preset="dawn" background blur={0.5} />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            enabled={selectedBubble === null}
-          />
         </Canvas>
 
         {selectedBubble === null ? (
-          <p className="app__hint">Click a bubble to explore</p>
+          <p className="app__hint">Pop a bubble to explore</p>
         ) : (
           <ContentPanel
             index={selectedBubble}
