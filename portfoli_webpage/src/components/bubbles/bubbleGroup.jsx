@@ -1,4 +1,3 @@
-import { Float } from '@react-three/drei'
 import Bubble from './bubble'
 import { useThree } from '@react-three/fiber';
 import { sections } from '../../content';
@@ -32,23 +31,17 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
   return (
     <>
       {layout.map((bubble, index) => (
-        <Float
+        <Bubble
           key={index}
-          speed={1.4}
-          floatIntensity={0.35}
-          rotationIntensity={0.15}
-          floatingRange={[-0.08, 0.08]}
+          scale={bubble.scale}
+          position={bubble.position}
+          phase={index * 1.7}
+          isSelected={selectedBubble === index}
+          isOtherSelected={selectedBubble !== null && selectedBubble !== index}
+          onClick={(origin) => onBubbleSelect(index, origin)}
         >
-          <Bubble
-            scale={bubble.scale}
-            position={bubble.position}
-            isSelected={selectedBubble === index}
-            isOtherSelected={selectedBubble !== null && selectedBubble !== index}
-            onClick={() => onBubbleSelect(index)}
-          >
-            {sections[index].label}
-          </Bubble>
-        </Float>
+          {sections[index].label}
+        </Bubble>
       ))}
     </>
   )
