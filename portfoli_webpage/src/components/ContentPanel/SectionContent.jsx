@@ -6,7 +6,6 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
     <>
       {section.kicker && <p className="card__kicker">{section.kicker}</p>}
       <Heading id={headingId} className="card__title">{section.title}</Heading>
-      {section.school && <p className="card__school">{section.school}</p>}
       {section.summary && <p className="card__summary">{section.summary}</p>}
 
       {section.stack && (
@@ -34,6 +33,18 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
             </div>
           ))}
         </dl>
+      )}
+
+      {section.degrees && (
+        <ul className="card__degrees">
+          {section.degrees.map((item) => (
+            <li key={item.school} className="card__degree">
+              <p className="card__school">{item.school}</p>
+              <p className="card__degree-name">{item.degree}</p>
+              {item.note && <span className="chip">{item.note}</span>}
+            </li>
+          ))}
+        </ul>
       )}
 
       {section.link && (

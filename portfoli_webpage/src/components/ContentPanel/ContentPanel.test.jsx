@@ -26,3 +26,10 @@ test('wraps around and closes with Back or Escape', () => {
   fireEvent.keyDown(window, { key: 'Escape' });
   expect(onClose).toHaveBeenCalledTimes(2);
 });
+
+test('lists both degrees in Education', () => {
+  render(<ContentPanel index={4} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByText('Michigan State University')).toBeInTheDocument();
+  expect(screen.getByText('Northern Michigan University')).toBeInTheDocument();
+  expect(screen.getByText('In progress, 2026')).toBeInTheDocument();
+});

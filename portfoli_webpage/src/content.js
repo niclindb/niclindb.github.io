@@ -46,7 +46,16 @@ export const sections = [
   {
     label: 'Education',
     title: 'Education',
-    school: 'Northern Michigan University',
-    summary: 'Bachelor’s degree in Computer Science, Minor in Mathematics',
+    degrees: [
+      {
+        school: 'Michigan State University',
+        degree: 'Master’s degree in Computer Science',
+        note: 'In progress, 2026',
+      },
+      {
+        school: 'Northern Michigan University',
+        degree: 'Bachelor’s degree in Computer Science, Minor in Mathematics',
+      },
+    ],
   },
 ];

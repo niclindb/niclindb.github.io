@@ -81,6 +81,28 @@ body, html, #root {
   font-size: 1.05rem;
 }
 
+.card__degrees {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card__degree + .card__degree {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(35, 36, 77, 0.1);
+}
+
+.card__degree-name {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.card__degree .chip {
+  display: inline-block;
+  margin-top: 8px;
+}
+
 .card__summary {
   margin: 0 0 16px;
   color: var(--ink-soft);
