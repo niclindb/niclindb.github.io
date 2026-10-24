@@ -5,23 +5,51 @@ import './MergeSortDemo.css';
 
 const SIZE = 32;
 const THREAD_OPTIONS = [1, 2, 4, 8];
-// Milliseconds per step; slow enough by default to follow each write
+// Milliseconds per comparison; slow enough by default to read each one
 const SPEEDS = [
-  { label: 'Slow', ms: 400 },
-  { label: 'Normal', ms: 150 },
-  { label: 'Fast', ms: 50 },
+  { label: 'Slow', ms: 800 },
+  { label: 'Normal', ms: 350 },
+  { label: 'Fast', ms: 100 },
 ];
 // One hue per thread, starting from the site's violet accent
 const THREAD_HUES = [255, 325, 190, 35, 150, 285, 0, 215];
 
 const threadColor = (thread, alpha = 1) => `hsla(${THREAD_HUES[thread]}, 70%, 58%, ${alpha})`;
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
-function phaseText(frame, threads) {
-  const busy = frame.active.length;
-  if (frame.phase === 'start') return `${threads === 1 ? '1 thread' : `${threads} threads`} ready`;
+function statusText(frame, threads) {
+  if (frame.phase === 'start') return `${plural(threads, 'thread')} ready`;
   if (frame.phase === 'done') return 'Sorted';
-  if (frame.phase === 'split') return `${busy === 1 ? '1 thread sorts' : `${busy} threads sort`} ${threads === 1 ? 'the array' : 'their own slice'}`;
-  return `${busy === 1 ? '1 thread merges' : `${busy} threads merge`} ${busy === 1 ? 'two halves' : 'pairs of slices'}`;
+  if (frame.active.length === 1) {
+    const { compare, winner } = frame.active[0];
+    const [left, right] = compare.map((i) => frame.values[i]);
+    const smaller = frame.values[winner];
+    return `Compare ${left} and ${right}: ${smaller} is smaller, so it moves into the merged part`;
+  }
+  const what = frame.phase === 'split' ? 'sort their own slices' : 'merge pairs of slices';
+  return `${frame.active.length} threads ${what}, each comparing the fronts of two halves`;
+}
+
+// What each bar is doing this tick
+function barRoles(frame) {
+  const roles = frame.values.map(() => ({ thread: null }));
+  for (const { thread, lo, hi, merged, split, compare, winner } of frame.active) {
+    for (let i = lo; i < hi; i++) {
+      roles[i] = { thread, part: i < merged ? 'merged' : i < split ? 'left' : 'right' };
+    }
+    roles[split].splitStart = true;
+    for (const i of compare) roles[i].compared = true;
+    roles[winner].winner = true;
+  }
+  return roles;
+}
+
+const PART_ALPHA = { merged: 0.95, left: 0.5, right: 0.25 };
+
+function PlayIcon({ playing, done }) {
+  if (playing) return <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />;
+  if (done) return <path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z" />;
+  return <path d="M8 5v14l11-7z" />;
 }
 
 // Parallel merge sort, one bar per value, coloured by the thread working on it
@@ -63,7 +91,7 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
     restart();
   };
 
-  // Pauses and moves on by one write, to look at each step
+  // Pauses and moves on by one comparison, to look at each step
   const stepOnce = () => {
     setPlaying(false);
     setStep((s) => (s >= last ? 0 : s + 1));
@@ -74,42 +102,46 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
     else setPlaying((p) => !p);
   };
 
-  // What each bar is doing this tick: inside a thread's range, or just written
-  const owner = new Array(values.length).fill(null);
-  const written = new Array(values.length).fill(false);
-  for (const { thread, lo, hi, index } of frame.active) {
-    for (let i = lo; i < hi; i++) owner[i] = thread;
-    written[index] = true;
-  }
-
+  const roles = barRoles(frame);
   const total = ticks(timeline);
   const elapsed = Math.min(step, total);
   const speedup = singleThreadTicks / total;
+  const status = statusText(frame, threads);
 
   return (
     <figure className="sort-demo" aria-label="Parallel merge sort visualizer">
       <div
         className="sort-demo__bars"
-        style={{ '--tick': `${Math.min(SPEEDS[speed].ms * 0.8, 250)}ms` }}
-        role="img" aria-label={`${threads} thread merge sort, ${phaseText(frame, threads).toLowerCase()}`}>
+        style={{ '--tick': `${Math.min(SPEEDS[speed].ms * 0.6, 250)}ms` }}
+        role="img"
+        aria-label={`${plural(threads, 'thread')} merge sort. ${status}`}
+      >
         {frame.values.map((value, i) => {
-          const thread = owner[i];
-          let background;
+          const role = roles[i];
+          let background = 'rgba(35, 36, 77, 0.16)';
           if (frame.phase === 'done') background = 'var(--accent)';
-          else if (thread === null) background = 'rgba(35, 36, 77, 0.2)';
-          else background = threadColor(thread, written[i] ? 1 : 0.4);
+          else if (role.thread !== null) {
+            background = threadColor(role.thread, role.winner ? 1 : PART_ALPHA[role.part]);
+          }
+          const classes = ['sort-demo__bar'];
+          if (role.compared) classes.push('sort-demo__bar--compared');
+          if (role.winner) classes.push('sort-demo__bar--winner');
+          if (role.splitStart) classes.push('sort-demo__bar--split');
           return (
-            <span
-              key={i}
-              className={`sort-demo__bar${written[i] ? ' sort-demo__bar--hit' : ''}`}
-              style={{ height: `${value}%`, background }}
-            />
+            <span key={i} className={classes.join(' ')} style={{ height: `${value}%`, background }} />
           );
         })}
       </div>
 
+      <ul className="sort-demo__legend" aria-hidden="true">
+        <li><i className="sort-demo__swatch sort-demo__swatch--merged" />Merged</li>
+        <li><i className="sort-demo__swatch sort-demo__swatch--left" />Left half</li>
+        <li><i className="sort-demo__swatch sort-demo__swatch--right" />Right half</li>
+        <li><i className="sort-demo__swatch sort-demo__swatch--compared" />Compared</li>
+      </ul>
+
       <figcaption className="sort-demo__status">
-        <span className="sort-demo__phase" aria-live="polite">{phaseText(frame, threads)}</span>
+        <span className="sort-demo__phase" aria-live="polite">{status}</span>
         <span className="sort-demo__stats">
           <span><strong>{elapsed}</strong> / {total} steps</span>
           {threads > 1 && (
@@ -121,36 +153,49 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
       </figcaption>
 
       <div className="sort-demo__controls">
-        <div className="sort-demo__threads" role="group" aria-label="Threads">
-          {THREAD_OPTIONS.map((n) => (
-            <button
-              key={n}
-              type="button"
-              aria-pressed={threads === n}
-              onClick={() => chooseThreads(n)}
-            >
-              {n} {n === 1 ? 'thread' : 'threads'}
-            </button>
-          ))}
-        </div>
-        <div className="sort-demo__threads" role="group" aria-label="Speed">
-          {SPEEDS.map((option, i) => (
-            <button
-              key={option.label}
-              type="button"
-              aria-pressed={speed === i}
-              onClick={() => setSpeed(i)}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-        <div className="sort-demo__actions">
-          <button type="button" onClick={togglePlay}>
+        <div className="sort-demo__playback">
+          <button type="button" className="sort-demo__play" onClick={togglePlay}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <PlayIcon playing={playing} done={done} />
+            </svg>
             {playing ? 'Pause' : done ? 'Replay' : 'Play'}
           </button>
-          <button type="button" onClick={stepOnce}>Step</button>
-          <button type="button" onClick={shuffle}>Shuffle</button>
+          <button type="button" className="sort-demo__ghost" onClick={stepOnce}>Step</button>
+          <button type="button" className="sort-demo__ghost" onClick={shuffle}>Shuffle</button>
+        </div>
+
+        <div className="sort-demo__settings">
+          <div className="sort-demo__setting">
+            <span id="sort-demo-threads">Threads</span>
+            <div className="sort-demo__segmented" role="group" aria-labelledby="sort-demo-threads">
+              {THREAD_OPTIONS.map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  aria-label={plural(n, 'thread')}
+                  aria-pressed={threads === n}
+                  onClick={() => chooseThreads(n)}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="sort-demo__setting">
+            <span id="sort-demo-speed">Speed</span>
+            <div className="sort-demo__segmented" role="group" aria-labelledby="sort-demo-speed">
+              {SPEEDS.map((option, i) => (
+                <button
+                  key={option.label}
+                  type="button"
+                  aria-pressed={speed === i}
+                  onClick={() => setSpeed(i)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </figure>
