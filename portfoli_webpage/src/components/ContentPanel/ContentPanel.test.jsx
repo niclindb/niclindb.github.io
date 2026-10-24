@@ -7,6 +7,8 @@ test('shows the selected section with its stack and neighbours', () => {
   render(<ContentPanel index={1} onClose={() => {}} onNavigate={onNavigate} />);
   expect(screen.getByRole('heading', { name: 'Custom Shopify Extensions' })).toBeInTheDocument();
   expect(screen.getByText('Shopify GraphQL')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /See the code on GitHub/ }))
+    .toHaveAttribute('href', 'https://github.com/niclindb/Getzs-apps');
 
   fireEvent.click(screen.getByRole('button', { name: /C\+\+ Project/ }));
   expect(onNavigate).toHaveBeenCalledWith(2, 'next');
