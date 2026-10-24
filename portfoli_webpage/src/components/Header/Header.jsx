@@ -1,3 +1,4 @@
+import ContactMenu from '../ContactMenu/ContactMenu';
 import './Header.css';
 
 export default function Header() {
@@ -22,16 +23,6 @@ export default function Header() {
         </svg>
       )
     },
-    { 
-      name: 'Contact Me', 
-      label: 'Email Nick',
-      url: 'mailto:nicklindberg0@gmail.com', 
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M0 3v18h24V3H0zm21.518 2L12 12.713 2.482 5h19.036zM2 19V7.183l10 8.104 10-8.104V19H2z"/>
-        </svg>
-      )
-    },
   ];
 
   return (
@@ -42,11 +33,10 @@ export default function Header() {
           <p className="header__subtitle">Software Developer</p>
         </div>
 
-        <nav className="header__nav" aria-label="Social media links">
+        <nav className="header__nav" aria-label="Links and contact">
           <ul className="header__social-links">
             {socialLinks.map((link) => {
-              const isMailto = link.url.startsWith('mailto:');
-              const isExternal = link.url.startsWith('http') || isMailto;
+              const isExternal = link.url.startsWith('http');
               const isPDF = link.url.toLowerCase().endsWith('.pdf');
               const target = isExternal || isPDF ? '_blank' : '_self';
               const rel = isExternal || isPDF ? 'noopener noreferrer' : undefined;
@@ -57,7 +47,7 @@ export default function Header() {
                     href={link.url}
                     target={target}
                     rel={rel}
-                    className={`header__social-link${isMailto ? ' header__social-link--primary' : ''}`}
+                    className="header__social-link"
                     aria-label={link.label}
                     title={link.name}
                   >
@@ -69,6 +59,9 @@ export default function Header() {
                 </li>
               );
             })}
+            <li>
+              <ContactMenu />
+            </li>
           </ul>
         </nav>
       </div>
