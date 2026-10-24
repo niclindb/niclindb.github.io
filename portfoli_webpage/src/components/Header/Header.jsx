@@ -4,6 +4,7 @@ export default function Header() {
   const socialLinks = [
     { 
       name: 'GitHub', 
+      label: 'GitHub profile (opens in a new tab)',
       url: 'https://github.com/niclindb', 
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -13,6 +14,7 @@ export default function Header() {
     },
     {
       name: 'Resume', 
+      label: 'Resume, PDF (opens in a new tab)',
       url: `${import.meta.env.BASE_URL}Resume.pdf`, 
       icon: ( 
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -22,6 +24,7 @@ export default function Header() {
     },
     { 
       name: 'Contact Me', 
+      label: 'Email Nick',
       url: 'mailto:nicklindberg0@gmail.com', 
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -47,7 +50,6 @@ export default function Header() {
               const isPDF = link.url.toLowerCase().endsWith('.pdf');
               const target = isExternal || isPDF ? '_blank' : '_self';
               const rel = isExternal || isPDF ? 'noopener noreferrer' : undefined;
-              const ariaLabel = isMailto ? `Send email to ${link.name}` : `Visit ${link.name} profile`;
 
               return (
                 <li key={link.name}>
@@ -56,7 +58,7 @@ export default function Header() {
                     target={target}
                     rel={rel}
                     className={`header__social-link${isMailto ? ' header__social-link--primary' : ''}`}
-                    aria-label={ariaLabel}
+                    aria-label={link.label}
                     title={link.name}
                   >
                     <span className="header__social-icon" aria-hidden="true">

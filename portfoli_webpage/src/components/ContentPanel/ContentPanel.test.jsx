@@ -36,10 +36,31 @@ test('lists both degrees in Education', () => {
 
 test('slides in from the side when moving between sections', () => {
   render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByRole('article')).toHaveClass('panel--next');
+  expect(screen.getByRole('dialog')).toHaveClass('panel--next');
 });
 
 test('shows the merge sort visualizer in the C++ project', () => {
   render(<ContentPanel index={2} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('figure', { name: 'Parallel merge sort visualizer' })).toBeInTheDocument();
+});
+
+test('opens as a dialog with focus on the section heading', () => {
+  render(<ContentPanel index={3} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('dialog', { name: 'Skills' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Skills' })).toHaveFocus();
+});
+
+test('keeps focus on the arrow used to move between sections', () => {
+  render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('button', { name: /Skills/ })).toHaveFocus();
+});
+
+test('Tab cycles inside the open section', () => {
+  render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
+  const buttons = screen.getAllByRole('button');
+  buttons[buttons.length - 1].focus();
+  fireEvent.keyDown(window, { key: 'Tab' });
+  expect(screen.getByRole('button', { name: 'Back' })).toHaveFocus();
+  fireEvent.keyDown(window, { key: 'Tab', shiftKey: true });
+  expect(buttons[buttons.length - 1]).toHaveFocus();
 });

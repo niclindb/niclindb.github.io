@@ -26,7 +26,7 @@ function gridLayout(aspect, count) {
   });
 }
 
-export default function BubbleGroup({ onBubbleSelect, selectedBubble, returningBubble, onLayout }) {
+export default function BubbleGroup({ onBubbleSelect, selectedBubble, returningBubble, focusedBubble, onLayout }) {
   const { size, camera } = useThree();
   const layout = gridLayout(size.width / size.height, sections.length);
 
@@ -57,6 +57,7 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble, returningB
           index={index}
           phase={index * 1.7}
           returning={returningBubble === index}
+          focused={focusedBubble === index}
           isSelected={selectedBubble === index}
           isOtherSelected={selectedBubble !== null && selectedBubble !== index}
           onClick={(origin) => onBubbleSelect(index, origin)}

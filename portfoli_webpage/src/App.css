@@ -5,6 +5,11 @@
   height: 100dvh;
 }
 
+.app__main {
+  position: absolute;
+  inset: 0;
+}
+
 .app__hint {
   position: absolute;
   left: 50%;
@@ -29,14 +34,17 @@
   to { opacity: 1; transform: translateX(-50%); }
 }
 
+.app__hint-touch {
+  display: none;
+}
+
 @media (hover: none) {
-  .app__hint {
-    font-size: 0;
+  .app__hint-pointer {
+    display: none;
   }
 
-  .app__hint::after {
-    content: 'Tap a bubble to explore';
-    font-size: 0.85rem;
+  .app__hint-touch {
+    display: inline;
   }
 }
 

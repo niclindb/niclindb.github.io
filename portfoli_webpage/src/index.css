@@ -45,6 +45,11 @@ body, html, #root {
   outline-offset: 2px;
 }
 
+/* Headings focused only so screen readers announce them */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 /* Glass card used by the bubble panel and the fallback page */
 .card {
   background: var(--glass-strong);
@@ -174,4 +179,17 @@ body, html, #root {
 .card > :last-child,
 .panel__body > :last-child {
   margin-bottom: 0;
+}
+
+/* Read by screen readers but not shown */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }

@@ -7,7 +7,8 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
   return (
     <>
       {section.kicker && <p className="card__kicker">{section.kicker}</p>}
-      <Heading id={headingId} className="card__title">{section.title}</Heading>
+      {/* With an id the heading can take focus, so it's read out when the section opens */}
+      <Heading id={headingId} tabIndex={headingId ? -1 : undefined} className="card__title">{section.title}</Heading>
       {section.summary && <p className="card__summary">{section.summary}</p>}
 
       {section.stack && (
