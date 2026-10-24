@@ -17,7 +17,7 @@
   flex: 1;
   min-width: 0;
   border-radius: 3px 3px 0 0;
-  transition: height 0.08s linear, background-color 0.15s ease;
+  transition: height var(--tick, 80ms) ease-out, background-color 0.15s ease;
 }
 
 .sort-demo__bar--hit {

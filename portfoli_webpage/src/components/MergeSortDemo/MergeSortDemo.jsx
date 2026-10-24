@@ -3,9 +3,14 @@ import { prefersReducedMotion } from '../../motion';
 import { buildTimeline, randomValues, ticks } from './timeline';
 import './MergeSortDemo.css';
 
-const SIZE = 48;
+const SIZE = 32;
 const THREAD_OPTIONS = [1, 2, 4, 8];
-const TICK_MS = 45;
+// Milliseconds per step; slow enough by default to follow each write
+const SPEEDS = [
+  { label: 'Slow', ms: 400 },
+  { label: 'Normal', ms: 150 },
+  { label: 'Fast', ms: 50 },
+];
 // One hue per thread, starting from the site's violet accent
 const THREAD_HUES = [255, 325, 190, 35, 150, 285, 0, 215];
 
@@ -24,6 +29,7 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
   const [values, setValues] = useState(() => initialValues ?? randomValues(SIZE));
   const [threads, setThreads] = useState(4);
   const [step, setStep] = useState(0);
+  const [speed, setSpeed] = useState(1);
   const [playing, setPlaying] = useState(() => autoPlay && !prefersReducedMotion());
 
   const timeline = useMemo(() => buildTimeline(values, threads), [values, threads]);
@@ -38,9 +44,9 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
       setPlaying(false);
       return undefined;
     }
-    const timer = setInterval(() => setStep((s) => Math.min(s + 1, last)), TICK_MS);
+    const timer = setInterval(() => setStep((s) => Math.min(s + 1, last)), SPEEDS[speed].ms);
     return () => clearInterval(timer);
-  }, [playing, done, last]);
+  }, [playing, done, last, speed]);
 
   const restart = () => {
     setStep(0);
@@ -55,6 +61,12 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
   const shuffle = () => {
     setValues(randomValues(SIZE));
     restart();
+  };
+
+  // Pauses and moves on by one write, to look at each step
+  const stepOnce = () => {
+    setPlaying(false);
+    setStep((s) => (s >= last ? 0 : s + 1));
   };
 
   const togglePlay = () => {
@@ -76,7 +88,10 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
 
   return (
     <figure className="sort-demo" aria-label="Parallel merge sort visualizer">
-      <div className="sort-demo__bars" role="img" aria-label={`${threads} thread merge sort, ${phaseText(frame, threads).toLowerCase()}`}>
+      <div
+        className="sort-demo__bars"
+        style={{ '--tick': `${Math.min(SPEEDS[speed].ms * 0.8, 250)}ms` }}
+        role="img" aria-label={`${threads} thread merge sort, ${phaseText(frame, threads).toLowerCase()}`}>
         {frame.values.map((value, i) => {
           const thread = owner[i];
           let background;
@@ -118,10 +133,23 @@ export default function MergeSortDemo({ initialValues, autoPlay = true }) {
             </button>
           ))}
         </div>
+        <div className="sort-demo__threads" role="group" aria-label="Speed">
+          {SPEEDS.map((option, i) => (
+            <button
+              key={option.label}
+              type="button"
+              aria-pressed={speed === i}
+              onClick={() => setSpeed(i)}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
         <div className="sort-demo__actions">
           <button type="button" onClick={togglePlay}>
             {playing ? 'Pause' : done ? 'Replay' : 'Play'}
           </button>
+          <button type="button" onClick={stepOnce}>Step</button>
           <button type="button" onClick={shuffle}>Shuffle</button>
         </div>
       </div>
