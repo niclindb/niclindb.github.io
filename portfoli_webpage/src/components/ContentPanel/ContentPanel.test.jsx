@@ -75,6 +75,13 @@ test('Tab cycles inside the open section', () => {
 
 test('leads About Me with work experience', () => {
   render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByText('Web Developer Intern · Shumaker Tech Group')).toBeInTheDocument();
+  expect(screen.getByText('Shumaker Tech Group')).toBeInTheDocument();
+  expect(screen.getByText('Web Developer Intern')).toBeInTheDocument();
   expect(screen.getByText(/inventory app for moving stock/)).toBeInTheDocument();
+});
+
+test('lists what each job involved and its stack', () => {
+  render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByText(/WordPress sites from Figma designs/)).toBeInTheDocument();
+  expect(screen.getAllByRole('list', { name: 'Tech stack' })).toHaveLength(2);
 });

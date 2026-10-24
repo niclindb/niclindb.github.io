@@ -5,15 +5,29 @@ const github = { href: 'https://github.com/niclindb', text: 'More on GitHub' };
 export const sections = [
   {
     label: 'About Me',
-    kicker: 'Web Developer Intern · Shumaker Tech Group',
     title: 'About Me',
-    // Getz’s facts are from public/Resume.pdf; the Shumaker role is newer than the resume.
-    summary:
-      'I build new websites and keep existing ones running as a web developer intern at Shumaker Tech Group. Before that, from March 2022, I wrote the custom Shopify tools that staff at Getz’s Clothiers in Marquette, Michigan, use to sell, price and move stock.',
-    highlights: [
-      'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
-      'An inventory app for moving stock between inventory locations with barcode scanning',
-      'Product pricing and barcode label printing',
+    // Getz’s facts are from public/Resume.pdf; the Shumaker role is newer than the resume
+    // and its wording is from Nick. Client sites aren't named.
+    jobs: [
+      {
+        company: 'Shumaker Tech Group',
+        role: 'Web Developer Intern',
+        stack: ['WordPress', 'Figma'],
+        highlights: [
+          'Build new WordPress sites from Figma designs, mostly for municipalities and townships',
+          'Keep live client sites current with page changes and announcements',
+        ],
+      },
+      {
+        company: 'Getz’s Clothiers · Marquette, Michigan',
+        role: 'Software Developer · from March 2022',
+        stack: ['Shopify', 'React', 'Liquid'],
+        highlights: [
+          'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
+          'An inventory app for moving stock between inventory locations with barcode scanning',
+          'Product pricing and barcode label printing',
+        ],
+      },
     ],
   },
   {
