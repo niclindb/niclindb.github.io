@@ -1,4 +1,6 @@
 import Bubble from './bubble'
+import * as THREE from 'three';
+import { useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 import { sections } from '../../content';
 
@@ -24,9 +26,26 @@ function gridLayout(aspect, count) {
   });
 }
 
-export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
-  const { size } = useThree();
+export default function BubbleGroup({ onBubbleSelect, selectedBubble, returningBubble, onLayout }) {
+  const { size, camera } = useThree();
   const layout = gridLayout(size.width / size.height, sections.length);
+
+  // Tell the page where each bubble sits on screen, so content can float
+  // back to it
+  useEffect(() => {
+    if (!onLayout) return;
+    const toScreen = (v) => ({
+      x: ((v.x + 1) / 2) * size.width,
+      y: ((1 - v.y) / 2) * size.height,
+    });
+    onLayout(layout.map(({ position, scale }) => {
+      const centre = toScreen(new THREE.Vector3(...position).project(camera));
+      const edge = toScreen(new THREE.Vector3(position[0] + scale, position[1], position[2]).project(camera));
+      return { ...centre, radius: Math.abs(edge.x - centre.x) };
+    }));
+    // layout is derived from size
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size.width, size.height, camera, onLayout]);
 
   return (
     <>
@@ -35,7 +54,9 @@ export default function BubbleGroup({ onBubbleSelect, selectedBubble }) {
           key={index}
           scale={bubble.scale}
           position={bubble.position}
+          index={index}
           phase={index * 1.7}
+          returning={returningBubble === index}
           isSelected={selectedBubble === index}
           isOtherSelected={selectedBubble !== null && selectedBubble !== index}
           onClick={(origin) => onBubbleSelect(index, origin)}
