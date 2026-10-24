@@ -21,7 +21,7 @@ export default function ContentPanel({ index, onClose, onNavigate }) {
 
   return (
     <div className="panel-layer">
-      <article key={index} className="panel card" aria-labelledby="panel-title">
+      <article key={index} className="panel" aria-labelledby="panel-title">
         <button type="button" className="panel__back" onClick={onClose}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
