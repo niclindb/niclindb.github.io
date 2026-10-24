@@ -5,11 +5,11 @@ const github = { href: 'https://github.com/niclindb', text: 'More on GitHub' };
 export const sections = [
   {
     label: 'About Me',
-    kicker: 'Software Developer · Getz’s Clothiers · Since 2022',
+    kicker: 'Web Developer Intern · Shumaker Tech Group',
     title: 'About Me',
-    // Facts from public/Resume.pdf; keep the two in step.
+    // Getz’s facts are from public/Resume.pdf; the Shumaker role is newer than the resume.
     summary:
-      'Since March 2022 I’ve written the custom Shopify software for Getz’s Clothiers, a clothing store in Marquette, Michigan, while also working its sales floor. Staff use what I build to sell, price and move stock.',
+      'I’m a web developer intern at Shumaker Tech Group. Before that, starting in March 2022, I wrote the custom Shopify software for Getz’s Clothiers, a clothing store in Marquette, Michigan, while also working its sales floor. Staff there use what I built to sell, price and move stock.',
     highlights: [
       'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
       'An inventory app for moving stock between store locations with barcode scanning',
