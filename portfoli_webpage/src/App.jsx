@@ -58,6 +58,8 @@ export default function App() {
         <SceneErrorBoundary>
           <Suspense fallback={null}>
             <Scene
+              // Nothing moves behind an open section, so skip drawing it
+              paused={selectedBubble !== null && showPanel && !pop}
               onBubbleSelect={handleBubbleSelect}
               selectedBubble={selectedBubble}
               returningBubble={returningBubble}
