@@ -5,9 +5,16 @@ const github = { href: 'https://github.com/niclindb', text: 'More on GitHub' };
 export const sections = [
   {
     label: 'About Me',
+    kicker: 'Web Developer Intern · Shumaker Tech Group',
     title: 'About Me',
+    // Getz’s facts are from public/Resume.pdf; the Shumaker role is newer than the resume.
     summary:
-      'I’m a passionate developer with experience in Java, C++, Python, and JavaScript. I enjoy solving problems through clean, efficient code and building applications that are both creative and practical. I’m always exploring new tools and technologies to expand my skillset and bring fresh ideas to life.',
+      'I build new websites and keep existing ones running as a web developer intern at Shumaker Tech Group. Before that, from March 2022, I wrote the custom Shopify tools that staff at Getz’s Clothiers in Marquette, Michigan, use to sell, price and move stock.',
+    highlights: [
+      'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
+      'An inventory app for moving stock between store locations with barcode scanning',
+      'Product pricing and barcode label printing',
+    ],
   },
   {
     label: 'React Project',
