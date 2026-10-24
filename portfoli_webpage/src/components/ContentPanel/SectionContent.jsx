@@ -1,3 +1,5 @@
+import MergeSortDemo from '../MergeSortDemo/MergeSortDemo';
+
 // Body of one section card, shared by the bubble panel and the fallback page.
 export default function SectionContent({ section, headingLevel = 'h2', headingId }) {
   const Heading = headingLevel;
@@ -13,6 +15,8 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
           {section.stack.map((item) => <li key={item} className="chip">{item}</li>)}
         </ul>
       )}
+
+      {section.demo === 'parallel-merge-sort' && <MergeSortDemo />}
 
       {section.highlights && (
         <ul className="card__list">

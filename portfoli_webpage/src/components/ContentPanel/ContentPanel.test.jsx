@@ -38,3 +38,8 @@ test('slides in from the side when moving between sections', () => {
   render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('article')).toHaveClass('panel--next');
 });
+
+test('shows the merge sort visualizer in the C++ project', () => {
+  render(<ContentPanel index={2} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('figure', { name: 'Parallel merge sort visualizer' })).toBeInTheDocument();
+});

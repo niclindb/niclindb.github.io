@@ -27,6 +27,8 @@ export const sections = [
     kicker: 'C++ Project',
     title: 'Parallel Merge Sort',
     stack: ['C++'],
+    // Shows the interactive visualizer from components/MergeSortDemo
+    demo: 'parallel-merge-sort',
     highlights: [
       'Efficiently sorts large datasets using parallel processing',
       'Demonstrates proficiency in C++ and parallel computing concepts',
