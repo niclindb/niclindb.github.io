@@ -12,7 +12,7 @@ export const sections = [
       'I build new websites and keep existing ones running as a web developer intern at Shumaker Tech Group. Before that, from March 2022, I wrote the custom Shopify tools that staff at Getz’s Clothiers in Marquette, Michigan, use to sell, price and move stock.',
     highlights: [
       'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
-      'An inventory app for moving stock between store locations with barcode scanning',
+      'An inventory app for moving stock between inventory locations with barcode scanning',
       'Product pricing and barcode label printing',
     ],
   },
@@ -25,7 +25,7 @@ export const sections = [
       'Getz’s Clothiers needed features that Shopify’s point of sale doesn’t have out of the box, so I built them as React extensions for the store’s staff.',
     stack: ['React', 'JavaScript', 'Shopify POS', 'Shopify GraphQL', 'Liquid'],
     highlights: [
-      'An inventory app for moving stock between store locations: staff scan barcodes, see changes in real time, and their progress is saved as they go',
+      'An inventory app for moving stock between inventory locations: staff scan barcodes, see changes in real time, and their progress is saved as they go',
       'Point-of-sale features: automatic discounts, held inventory, real-time product cost look-up and charge-account orders',
       'Product pricing with barcode label printing',
     ],
