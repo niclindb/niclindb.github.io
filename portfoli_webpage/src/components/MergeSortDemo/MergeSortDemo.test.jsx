@@ -26,3 +26,23 @@ test('switching to one thread restarts without a speedup', () => {
   expect(screen.queryByText(/vs 1 thread/)).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
 });
+
+test('Step pauses and moves on one write at a time', () => {
+  render(<MergeSortDemo initialValues={values} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Step' }));
+  expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+  expect(screen.getByText('1')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Step' }));
+  expect(screen.getByText('2')).toBeInTheDocument();
+});
+
+test('Slow takes longer per step than Fast', () => {
+  vi.useFakeTimers();
+  render(<MergeSortDemo initialValues={values} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Slow' }));
+  act(() => vi.advanceTimersByTime(800));
+  expect(screen.getByText('2')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Fast' }));
+  act(() => vi.advanceTimersByTime(500));
+  expect(screen.getByText('12')).toBeInTheDocument();
+});
