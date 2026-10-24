@@ -50,6 +50,7 @@ test('slides in from the side when moving between sections', () => {
 test('shows the merge sort visualizer in the C++ project', () => {
   render(<ContentPanel index={2} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('figure', { name: 'Parallel merge sort visualizer' })).toBeInTheDocument();
+  expect(screen.getByText(/last merge of the two halves runs on one thread/)).toBeInTheDocument();
 });
 
 test('opens as a dialog with focus on the section heading', () => {
