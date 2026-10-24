@@ -27,10 +27,13 @@ export default function Bubble({
   isSelected,
   isOtherSelected,
   returning,
+  focused,
   onClick,
   ...props
 }) {
-  const [hovered, setHovered] = useState(false);
+  const [pointerOver, setPointerOver] = useState(false);
+  // Keyboard focus on the matching menu button lifts the bubble like hover
+  const hovered = pointerOver || focused;
   const drift = useRef();
   const body = useRef();
   const sinceLoad = useRef(0);
@@ -86,8 +89,10 @@ export default function Bubble({
   }, [hidden, hovered, baseScale, api]);
 
   // Bubbles drift on the air and their skin wobbles, but each stays near
-  // its spot in the grid. On load they rise up from below.
+  // its spot in the grid. On load they rise up from below. With reduced
+  // motion they hold still.
   useFrame(({ clock }, delta) => {
+    if (reduceMotion) return;
     sinceLoad.current += Math.min(Math.max(delta, 0), 0.1);
     const entrance = reduceMotion
       ? 1
@@ -128,8 +133,8 @@ export default function Bubble({
       <animated.group
         scale={scale}
         visible={!gone && !isSelected}
-        onPointerOver={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = 'pointer'; }}
-        onPointerOut={() => { setHovered(false); document.body.style.cursor = ''; }}
+        onPointerOver={(e) => { e.stopPropagation(); setPointerOver(true); document.body.style.cursor = 'pointer'; }}
+        onPointerOut={() => { setPointerOver(false); document.body.style.cursor = ''; }}
         onClick={handleClick}
       >
         <group ref={body}>
@@ -137,7 +142,7 @@ export default function Bubble({
             <sphereGeometry args={[1, 64, 64]} />
             <AnimatedMeshDistortMaterial
               distort={hovered ? 0.2 : 0.12}
-              speed={hovered ? 3 : 2}
+              speed={reduceMotion ? 0 : hovered ? 3 : 2}
               transmission={1.05}
               thickness={-0.5}
               roughness={0}

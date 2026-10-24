@@ -33,7 +33,7 @@ export default function AmbientBubbles() {
           b.x = (Math.random() - 0.5) * 18;
         }
       }
-      dummy.position.set(b.x + Math.sin(t * 0.8 + b.sway) * 0.25, b.y, b.z);
+      dummy.position.set(b.x + (still ? 0 : Math.sin(t * 0.8 + b.sway) * 0.25), b.y, b.z);
       dummy.scale.setScalar(b.size);
       dummy.updateMatrix();
       mesh.current.setMatrixAt(i, dummy.matrix);

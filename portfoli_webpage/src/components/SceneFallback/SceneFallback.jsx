@@ -7,13 +7,13 @@ import './SceneFallback.css';
 // (e.g. WebGL is unavailable or a CDN asset can't be fetched).
 export function SceneFallback() {
   return (
-    <main className="scene-fallback">
+    <div className="scene-fallback">
       {sections.map((section) => (
         <section key={section.label} className="scene-fallback__section card">
           <SectionContent section={section} />
         </section>
       ))}
-    </main>
+    </div>
   );
 }
 

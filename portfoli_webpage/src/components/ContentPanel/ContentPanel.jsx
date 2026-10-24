@@ -17,6 +17,8 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
   const layerRef = useRef(null);
   const panelRef = useRef(null);
   const bubbleRef = useRef(null);
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
   const [closing, setClosing] = useState(false);
   // Read the latest values when Back is pressed, without restarting the
   // animation if the parent re-renders mid-flight
@@ -73,10 +75,25 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
     return () => animations.forEach((a) => a.cancel());
   }, [closing]);
 
+  // Move focus into the content as it appears: to the heading after a pop,
+  // or back to the arrow that was used when moving between sections
+  useEffect(() => {
+    const target = entrance === 'next' ? nextRef.current
+      : entrance === 'prev' ? prevRef.current
+      : panelRef.current?.querySelector('#panel-title');
+    target?.focus({ preventScroll: true });
+  }, [index, entrance]);
+
   useEffect(() => {
     const onKey = (e) => {
       if (closing) return;
+      if (e.key === 'Tab') {
+        keepFocusInside(e, layerRef.current);
+        return;
+      }
       if (e.key === 'Escape') close();
+      // Leave arrow keys alone when they belong to a form control
+      if (e.target.closest?.('input, select, textarea, [contenteditable="true"]')) return;
       if (e.key === 'ArrowLeft') onNavigate(prev, 'prev');
       if (e.key === 'ArrowRight') onNavigate(next, 'next');
     };
@@ -90,6 +107,8 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
         key={index}
         ref={panelRef}
         className={`panel panel--${entrance}`}
+        role="dialog"
+        aria-modal="true"
         aria-labelledby="panel-title"
       >
         <button type="button" className="panel__back" onClick={close}>
@@ -104,10 +123,10 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
         </div>
 
         <nav className="panel__nav" aria-label="Sections">
-          <button type="button" onClick={() => onNavigate(prev, 'prev')}>
+          <button ref={prevRef} type="button" onClick={() => onNavigate(prev, 'prev')}>
             <span aria-hidden="true">← </span>{sections[prev].label}
           </button>
-          <button type="button" onClick={() => onNavigate(next, 'next')}>
+          <button ref={nextRef} type="button" onClick={() => onNavigate(next, 'next')}>
             {sections[next].label}<span aria-hidden="true"> →</span>
           </button>
         </nav>
@@ -122,4 +141,22 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
       )}
     </div>
   );
+}
+
+// Tab and Shift+Tab cycle through the open section instead of reaching the
+// hidden page behind it
+function keepFocusInside(e, container) {
+  if (!container) return;
+  const focusable = [...container.querySelectorAll('a[href], button:not([disabled])')];
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  const inside = container.contains(document.activeElement);
+  if (e.shiftKey && (!inside || document.activeElement === first)) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && (!inside || document.activeElement === last)) {
+    e.preventDefault();
+    first.focus();
+  }
 }

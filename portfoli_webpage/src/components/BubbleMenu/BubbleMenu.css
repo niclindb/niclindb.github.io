@@ -1,0 +1,21 @@
+.bubble-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Sits exactly over its 3D bubble. Clicks go through to the canvas. */
+.bubble-menu__button {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  pointer-events: none;
+}
+
+.bubble-menu__button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 12px;
+}
