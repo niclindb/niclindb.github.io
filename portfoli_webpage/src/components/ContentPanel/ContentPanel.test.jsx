@@ -9,9 +9,9 @@ test('shows the selected section with its stack and neighbours', () => {
   expect(screen.getByText('Shopify GraphQL')).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('button', { name: /C\+\+ Project/ }));
-  expect(onNavigate).toHaveBeenCalledWith(2);
+  expect(onNavigate).toHaveBeenCalledWith(2, 'next');
   fireEvent.click(screen.getByRole('button', { name: /About Me/ }));
-  expect(onNavigate).toHaveBeenCalledWith(0);
+  expect(onNavigate).toHaveBeenCalledWith(0, 'prev');
 });
 
 test('wraps around and closes with Back or Escape', () => {
@@ -20,7 +20,7 @@ test('wraps around and closes with Back or Escape', () => {
   render(<ContentPanel index={0} onClose={onClose} onNavigate={onNavigate} />);
 
   fireEvent.keyDown(window, { key: 'ArrowLeft' });
-  expect(onNavigate).toHaveBeenCalledWith(4);
+  expect(onNavigate).toHaveBeenCalledWith(4, 'prev');
 
   fireEvent.click(screen.getByRole('button', { name: 'Back' }));
   fireEvent.keyDown(window, { key: 'Escape' });
@@ -32,4 +32,9 @@ test('lists both degrees in Education', () => {
   expect(screen.getByText('Michigan State University')).toBeInTheDocument();
   expect(screen.getByText('Northern Michigan University')).toBeInTheDocument();
   expect(screen.getByText('In progress, 2026')).toBeInTheDocument();
+});
+
+test('slides in from the side when moving between sections', () => {
+  render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('article')).toHaveClass('panel--next');
 });

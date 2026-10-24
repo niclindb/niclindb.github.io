@@ -1,3 +1,4 @@
+/* The calm, frosted "inside of the bubble" behind the content */
 .panel-layer {
   position: absolute;
   inset: 0;
@@ -5,58 +6,78 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 104px 16px 24px;
+  padding: 112px 20px 32px;
   box-sizing: border-box;
-  pointer-events: none;
+  background: rgba(248, 245, 255, 0.78);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  animation: layer-in 0.25s ease-out both;
+}
+
+@keyframes layer-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .panel {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 620px;
   max-height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  pointer-events: auto;
-  /* No box: the content floats free, as if it had been inside the bubble.
-     A soft glow behind it keeps the text readable on the sky. */
-  padding: 8px 4px;
-  line-height: 1.6;
+  line-height: 1.65;
+  font-size: 1.075rem;
   color: var(--ink);
 }
 
-.panel::before {
-  content: '';
-  position: absolute;
-  inset: -12% -18%;
-  z-index: -1;
-  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0));
-  animation: spill-glow 0.7s ease-out both;
+/* Larger, higher-contrast type than the old card */
+.panel .card__title {
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  margin-bottom: 16px;
 }
 
-/* Each piece spills out of the pop one after another */
-.panel > *,
-.panel__body > * {
-  animation: spill-out 0.55s cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
+.panel .card__summary,
+.panel .card__list,
+.panel .card__degree-name {
+  color: #34365f;
 }
 
-.panel__body > :nth-child(1) { animation-delay: 0.05s; }
-.panel__body > :nth-child(2) { animation-delay: 0.1s; }
-.panel__body > :nth-child(3) { animation-delay: 0.15s; }
-.panel__body > :nth-child(4) { animation-delay: 0.2s; }
-.panel__body > :nth-child(5) { animation-delay: 0.25s; }
-.panel__body > :nth-child(n + 6) { animation-delay: 0.3s; }
-.panel > .panel__body { animation: none; }
-.panel > .panel__nav { animation-delay: 0.35s; }
-
-@keyframes spill-out {
-  from { opacity: 0; transform: scale(0.6); filter: blur(6px); }
-  to { opacity: 1; transform: none; filter: none; }
+.panel .card__kicker {
+  font-size: 0.8rem;
 }
 
-@keyframes spill-glow {
-  from { opacity: 0; transform: scale(0.3); }
+/* After a pop, the pieces rise into place one after another */
+.panel--pop .panel__back,
+.panel--pop .panel__body > *,
+.panel--pop .panel__nav {
+  animation: rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.panel--pop .panel__body > :nth-child(1) { animation-delay: 0.04s; }
+.panel--pop .panel__body > :nth-child(2) { animation-delay: 0.08s; }
+.panel--pop .panel__body > :nth-child(3) { animation-delay: 0.12s; }
+.panel--pop .panel__body > :nth-child(4) { animation-delay: 0.16s; }
+.panel--pop .panel__body > :nth-child(n + 5) { animation-delay: 0.2s; }
+.panel--pop .panel__nav { animation-delay: 0.24s; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Moving between sections slides the content across */
+.panel--next { animation: slide-from-right 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.panel--prev { animation: slide-from-left 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes slide-from-right {
+  from { opacity: 0; transform: translateX(48px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes slide-from-left {
+  from { opacity: 0; transform: translateX(-48px); }
   to { opacity: 1; transform: none; }
 }
 
@@ -101,24 +122,46 @@
 }
 
 .panel__nav button {
-  font-size: 0.85rem;
-  padding: 4px 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .panel__nav button:hover {
-  color: var(--accent);
+  background: rgba(109, 79, 216, 0.2);
+  transform: translateY(-1px);
+}
+
+/* On Back, the content shrinks into a little bubble that floats home */
+.panel__home-bubble {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95) 0 6%, transparent 7%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 55%, rgba(236, 222, 255, 0.55) 80%, rgba(255, 255, 255, 0.9) 100%),
+    conic-gradient(from 40deg, rgba(255, 140, 220, 0.35), rgba(130, 220, 255, 0.35), rgba(255, 240, 150, 0.3), rgba(180, 140, 255, 0.35), rgba(255, 140, 220, 0.35));
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.85) inset, 0 8px 30px rgba(45, 36, 99, 0.15);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .panel::before,
-  .panel > *,
-  .panel__body > * {
+  .panel-layer,
+  .panel,
+  .panel--pop .panel__back,
+  .panel--pop .panel__body > *,
+  .panel--pop .panel__nav {
     animation: none;
   }
 }
 
 @media (max-width: 640px) {
   .panel-layer {
-    padding-top: 84px;
+    padding: 88px 18px 24px;
   }
 }
