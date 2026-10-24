@@ -1,0 +1,102 @@
+.sort-demo {
+  margin: 4px 0 20px;
+}
+
+.sort-demo__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 170px;
+  padding: 12px 12px 0;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(35, 36, 77, 0.08) inset;
+}
+
+.sort-demo__bar {
+  flex: 1;
+  min-width: 0;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.08s linear, background-color 0.15s ease;
+}
+
+.sort-demo__bar--hit {
+  box-shadow: 0 -3px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.sort-demo__status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.sort-demo__phase {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.sort-demo__stats {
+  display: flex;
+  gap: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sort-demo__stats strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sort-demo__controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sort-demo__threads,
+.sort-demo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sort-demo button {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sort-demo button:hover {
+  background: rgba(109, 79, 216, 0.2);
+}
+
+.sort-demo button[aria-pressed='true'] {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .sort-demo__bars {
+    gap: 1px;
+    height: 140px;
+    padding: 8px 8px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sort-demo__bar {
+    transition: none;
+  }
+}
