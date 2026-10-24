@@ -38,9 +38,12 @@ export const sections = [
     stack: ['C++'],
     // Shows the interactive visualizer from components/MergeSortDemo
     demo: 'parallel-merge-sort',
+    summary:
+      'Merge sort split across threads: each thread sorts its own slice of the array, then neighbouring slices are merged in pairs until one sorted array is left.',
     highlights: [
-      'Efficiently sorts large datasets using parallel processing',
-      'Demonstrates proficiency in C++ and parallel computing concepts',
+      'With p threads, sorting the slices is fully parallel, so each thread does about 1/p of the O(n log n) work',
+      'Each merge round halves the number of busy threads, and the last merge of the two halves runs on one thread, which is what limits the speedup',
+      'The visualizer above counts every comparison as a step, so the speedup it shows is measured against one thread sorting the same array',
     ],
     link: github,
   },
