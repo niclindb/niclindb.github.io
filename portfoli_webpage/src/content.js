@@ -1,6 +1,5 @@
 // Text shown when a bubble is opened, and on the plain HTML fallback page.
 // Order matches the bubble layout in components/bubbles/bubbleGroup.jsx.
-const github = { href: 'https://github.com/niclindb', text: 'More on GitHub' };
 
 export const sections = [
   {
@@ -45,7 +44,6 @@ export const sections = [
       'Each merge round halves the number of busy threads, and the last merge of the two halves runs on one thread, which is what limits the speedup',
       'The visualizer above counts every comparison as a step, so the speedup it shows is measured against one thread sorting the same array',
     ],
-    link: github,
   },
   {
     label: 'Skills',
