@@ -47,6 +47,19 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
               <p className="card__school">{item.school}</p>
               <p className="card__degree-name">{item.degree}</p>
               {item.note && <span className="chip">{item.note}</span>}
+              {item.honors && (
+                <ul className="card__honors" aria-label="Honors">
+                  {item.honors.map((honor) => <li key={honor}>{honor}</li>)}
+                </ul>
+              )}
+              {item.coursework && (
+                <>
+                  <p className="card__subhead">Relevant coursework</p>
+                  <ul className="card__chips">
+                    {item.coursework.map((course) => <li key={course} className="chip">{course}</li>)}
+                  </ul>
+                </>
+              )}
             </li>
           ))}
         </ul>

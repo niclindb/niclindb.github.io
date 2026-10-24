@@ -36,6 +36,12 @@ test('lists both degrees in Education', () => {
   expect(screen.getByText('In progress, 2026')).toBeInTheDocument();
 });
 
+test('shows honors and relevant coursework in Education', () => {
+  render(<ContentPanel index={4} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('list', { name: 'Honors' })).toHaveTextContent('Dean’s List');
+  expect(screen.getByText('Parallel and Distributed Processing')).toBeInTheDocument();
+});
+
 test('slides in from the side when moving between sections', () => {
   render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('dialog')).toHaveClass('panel--next');

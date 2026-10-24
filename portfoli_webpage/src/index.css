@@ -103,9 +103,35 @@ body, html, #root {
   color: var(--ink-soft);
 }
 
-.card__degree .chip {
+.card__degree > .chip {
   display: inline-block;
   margin-top: 8px;
+}
+
+.card__honors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.card__honors li::before {
+  content: '★ ';
+  color: var(--accent);
+}
+
+.card__subhead {
+  margin: 12px 0 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.card__degree .card__chips {
+  margin-bottom: 0;
 }
 
 .card__summary {

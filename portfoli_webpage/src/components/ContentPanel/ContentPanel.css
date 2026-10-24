@@ -40,7 +40,8 @@
 
 .panel .card__summary,
 .panel .card__list,
-.panel .card__degree-name {
+.panel .card__degree-name,
+.panel .card__honors {
   color: #34365f;
 }
 
