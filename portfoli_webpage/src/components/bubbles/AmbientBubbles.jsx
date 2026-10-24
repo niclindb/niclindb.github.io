@@ -22,8 +22,10 @@ export default function AmbientBubbles() {
     []
   );
 
-  useFrame(({ clock }, delta) => {
+  useFrame(({ clock }, rawDelta) => {
     if (!mesh.current) return;
+    // A long gap, like after the scene was paused, shouldn't make them jump
+    const delta = Math.min(rawDelta, 0.1);
     const t = clock.elapsedTime;
     bubbles.forEach((b, i) => {
       if (!still) {
