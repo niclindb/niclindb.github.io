@@ -49,7 +49,7 @@ export const sections = [
       { name: 'Backend', items: ['Node.js', 'Python', 'SQL'] },
       { name: 'Frontend', items: ['React', 'TypeScript', 'HTML'] },
       { name: 'Other languages', items: ['Java', 'C++'] },
-      { name: 'Tools & platforms', items: ['Git', 'Docker', 'AWS'] },
+      { name: 'Tools & platforms', items: ['Git', 'Docker'] },
     ],
   },
   {
