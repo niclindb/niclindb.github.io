@@ -3,6 +3,7 @@ import { vi } from 'vitest';
 import MergeSortDemo from './MergeSortDemo';
 
 const values = [40, 10, 90, 30, 70, 20, 80, 60];
+const stepCount = () => Number(document.querySelector('.sort-demo__stats strong').textContent);
 
 afterEach(() => vi.useRealTimers());
 
@@ -12,7 +13,7 @@ test('runs to the end and reports the speedup', () => {
   expect(screen.getByText('4 threads ready')).toBeInTheDocument();
   expect(screen.getByText(/vs 1 thread/)).toBeInTheDocument();
 
-  act(() => vi.advanceTimersByTime(10000));
+  act(() => vi.advanceTimersByTime(20000));
   expect(screen.getByText('Sorted')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Replay' })).toBeInTheDocument();
   const heights = [...document.querySelectorAll('.sort-demo__bar')].map((b) => parseInt(b.style.height, 10));
@@ -27,22 +28,32 @@ test('switching to one thread restarts without a speedup', () => {
   expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
 });
 
-test('Step pauses and moves on one write at a time', () => {
+test('with one thread, each step names the two values compared', () => {
+  render(<MergeSortDemo initialValues={values} autoPlay={false} />);
+  fireEvent.click(screen.getByRole('button', { name: '1 thread' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Step' }));
+  // The first merge compares 40 and 10
+  expect(screen.getByText('Compare 40 and 10: 10 is smaller, so it moves into the merged part')).toBeInTheDocument();
+  expect(document.querySelectorAll('.sort-demo__bar--compared')).toHaveLength(2);
+  expect(document.querySelectorAll('.sort-demo__bar--winner')).toHaveLength(1);
+});
+
+test('Step pauses and moves on one comparison at a time', () => {
   render(<MergeSortDemo initialValues={values} />);
   fireEvent.click(screen.getByRole('button', { name: 'Step' }));
   expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
-  expect(screen.getByText('1')).toBeInTheDocument();
+  expect(stepCount()).toBe(1);
   fireEvent.click(screen.getByRole('button', { name: 'Step' }));
-  expect(screen.getByText('2')).toBeInTheDocument();
+  expect(stepCount()).toBe(2);
 });
 
 test('Slow takes longer per step than Fast', () => {
   vi.useFakeTimers();
   render(<MergeSortDemo initialValues={values} />);
   fireEvent.click(screen.getByRole('button', { name: 'Slow' }));
-  act(() => vi.advanceTimersByTime(800));
-  expect(screen.getByText('2')).toBeInTheDocument();
+  act(() => vi.advanceTimersByTime(1600));
+  expect(stepCount()).toBe(2);
   fireEvent.click(screen.getByRole('button', { name: 'Fast' }));
-  act(() => vi.advanceTimersByTime(500));
-  expect(screen.getByText('12')).toBeInTheDocument();
+  act(() => vi.advanceTimersByTime(300));
+  expect(stepCount()).toBe(5);
 });

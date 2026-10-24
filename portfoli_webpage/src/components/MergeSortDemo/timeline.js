@@ -3,23 +3,28 @@
 // The array is split into one slice per thread and each thread merge sorts
 // its slice. Then neighbouring slices are merged in pairs, halving the number
 // of busy threads each round, until one thread merges the two halves. Every
-// tick, each busy thread does one unit of work (writes one element of a
-// merge), so the number of frames is the parallel running time and the sum
-// of the work is what a single thread would have done.
+// tick, each busy thread makes one comparison, so the number of frames is the
+// parallel running time and the total work is what one thread would do.
 
-// One unit of work per yield: the index just written, plus the range the
-// thread is currently merging.
+// Merges [lo, mid) and [mid, hi) so the bars always read as
+// [merged so far | rest of left | rest of right]. Each step compares the
+// fronts of the two rests; the smaller moves to the end of the merged part.
+// One step per yield, shown before the move so the comparison is visible.
 function* merge(a, lo, mid, hi) {
-  const left = a.slice(lo, mid);
-  const right = a.slice(mid, hi);
-  let i = 0;
-  let j = 0;
-  for (let k = lo; k < hi; k++) {
-    a[k] = j >= right.length || (i < left.length && left[i] <= right[j])
-      ? left[i++]
-      : right[j++];
-    yield { index: k, lo, hi };
+  let k = lo; // front of the left rest
+  let r = mid; // front of the right rest
+  while (k < r && r < hi) {
+    const takeRight = a[r] < a[k];
+    yield { lo, hi, merged: k, split: r, compare: [k, r], winner: takeRight ? r : k };
+    if (takeRight) {
+      const value = a[r];
+      a.copyWithin(k + 1, k, r);
+      a[k] = value;
+      r++;
+    }
+    k++;
   }
+  // Once one side runs out, the other is already in place
 }
 
 function* mergeSort(a, lo, hi) {
@@ -55,6 +60,8 @@ export function buildTimeline(input, threads) {
         active.push({ thread: task.thread, ...step.value });
         return true;
       });
+      // Each step's move happens at the start of the next one, so this
+      // snapshot shows the bars as they were compared
       if (active.length) frames.push({ values: a.slice(), active, phase, work });
     }
   };
