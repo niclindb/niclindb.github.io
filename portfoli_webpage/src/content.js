@@ -5,9 +5,16 @@ const github = { href: 'https://github.com/niclindb', text: 'More on GitHub' };
 export const sections = [
   {
     label: 'About Me',
+    kicker: 'Software Developer · Getz’s Clothiers · Since 2022',
     title: 'About Me',
+    // Facts from public/Resume.pdf; keep the two in step.
     summary:
-      'I’m a passionate developer with experience in Java, C++, Python, and JavaScript. I enjoy solving problems through clean, efficient code and building applications that are both creative and practical. I’m always exploring new tools and technologies to expand my skillset and bring fresh ideas to life.',
+      'Since March 2022 I’ve written the custom Shopify software for Getz’s Clothiers, a clothing store in Marquette, Michigan, while also working its sales floor. Staff use what I build to sell, price and move stock.',
+    highlights: [
+      'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
+      'An inventory app for moving stock between store locations with barcode scanning',
+      'Product pricing and barcode label printing',
+    ],
   },
   {
     label: 'React Project',

@@ -64,3 +64,9 @@ test('Tab cycles inside the open section', () => {
   fireEvent.keyDown(window, { key: 'Tab', shiftKey: true });
   expect(buttons[buttons.length - 1]).toHaveFocus();
 });
+
+test('leads About Me with work experience', () => {
+  render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByText(/Getz’s Clothiers · Since 2022/)).toBeInTheDocument();
+  expect(screen.getByText(/inventory app for moving stock/)).toBeInTheDocument();
+});
