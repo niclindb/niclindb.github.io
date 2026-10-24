@@ -24,7 +24,7 @@
 
 /* The two fronts being compared get an outline; the smaller one is solid */
 .sort-demo__bar--compared {
-  box-shadow: 0 0 0 2px var(--ink);
+  box-shadow: 0 0 0 1.5px rgba(35, 36, 77, 0.3);
   z-index: 1;
 }
 
@@ -35,7 +35,7 @@
   top: -11px;
   transform: translateX(-50%);
   border: 5px solid transparent;
-  border-top-color: var(--ink);
+  border-top-color: var(--ink-soft);
 }
 
 /* Dashed line between the left and right halves of a merge */
@@ -75,7 +75,7 @@
 .sort-demo__swatch--merged { background: hsla(255, 70%, 58%, 0.95); }
 .sort-demo__swatch--left { background: hsla(255, 70%, 58%, 0.5); }
 .sort-demo__swatch--right { background: hsla(255, 70%, 58%, 0.25); }
-.sort-demo__swatch--compared { box-shadow: 0 0 0 2px var(--ink) inset; }
+.sort-demo__swatch--compared { box-shadow: 0 0 0 1.5px rgba(35, 36, 77, 0.3) inset; }
 
 .sort-demo__status {
   display: flex;
