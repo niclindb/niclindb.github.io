@@ -181,6 +181,41 @@ body, html, #root {
   margin: 0;
 }
 
+.card__skills {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.card__skill {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.card__skill .chip {
+  justify-self: start;
+}
+
+.card__skill-where {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 560px) {
+  .card__skill {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .card__skill-where {
+    font-size: 0.9rem;
+  }
+}
+
 .card__link {
   display: inline-block;
   color: var(--accent);

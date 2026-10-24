@@ -31,9 +31,21 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
             <div key={group.name} className="card__group">
               <dt>{group.name}</dt>
               <dd>
-                <ul className="card__chips">
-                  {group.items.map((item) => <li key={item} className="chip">{item}</li>)}
-                </ul>
+                {/* A skill is a plain name, or { name, where } when it says where it was used */}
+                {group.items.every((item) => typeof item === 'string') ? (
+                  <ul className="card__chips">
+                    {group.items.map((item) => <li key={item} className="chip">{item}</li>)}
+                  </ul>
+                ) : (
+                  <ul className="card__skills">
+                    {group.items.map((item) => (
+                      <li key={item.name} className="card__skill">
+                        <span className="chip">{item.name}</span>
+                        <span className="card__skill-where">{item.where}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </dd>
             </div>
           ))}

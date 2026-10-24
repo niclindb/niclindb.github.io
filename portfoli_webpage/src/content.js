@@ -47,11 +47,44 @@ export const sections = [
   {
     label: 'Skills',
     title: 'Skills',
+    // Each skill names where it was used. Getz’s and the AVL tree are from
+    // public/Resume.pdf, Shumaker is from Nick; the rest is this site's own code.
     groups: [
-      { name: 'Backend', items: ['Node.js', 'Python', 'SQL'] },
-      { name: 'Frontend', items: ['React', 'TypeScript', 'HTML'] },
-      { name: 'Other languages', items: ['Java', 'C++'] },
-      { name: 'Tools & platforms', items: ['Git', 'Docker'] },
+      {
+        name: 'Web',
+        items: [
+          { name: 'React', where: 'Shopify extensions at Getz’s Clothiers, and this site' },
+          { name: 'JavaScript', where: 'Getz’s Shopify tools, and this site' },
+          { name: 'HTML & CSS', where: 'The layout and glass styling of this site' },
+          { name: 'WordPress', where: 'Building and updating client sites at Shumaker Tech Group' },
+          { name: 'Figma', where: 'Turning designs into WordPress sites at Shumaker' },
+          { name: 'Three.js', where: 'The 3D bubbles on this site, with React Three Fiber' },
+        ],
+      },
+      {
+        name: 'Shopify',
+        items: [
+          { name: 'Shopify POS', where: 'Automatic discounts, held inventory and charge-account orders at Getz’s' },
+          { name: 'GraphQL', where: 'Getz’s custom Shopify extensions' },
+          { name: 'Liquid', where: 'Custom point-of-sale features at Getz’s' },
+        ],
+      },
+      {
+        name: 'Systems & algorithms',
+        items: [
+          { name: 'C++', where: 'The parallel merge sort here, and an AVL tree database' },
+          { name: 'Parallel programming', where: 'The merge sort, and NMU’s Parallel and Distributed Processing course' },
+          { name: 'Data structures', where: 'A self-balancing AVL tree for storing and searching records' },
+        ],
+      },
+      {
+        name: 'Tools',
+        items: [
+          { name: 'Git & GitHub', where: 'Version control for this site and my other projects' },
+          { name: 'Vite & Vitest', where: 'Building and testing this site, with tests run on every pull request' },
+        ],
+      },
+      { name: 'Also worked with', items: ['Python', 'Java', 'Node.js', 'TypeScript', 'SQL', 'Docker'] },
     ],
   },
   {
