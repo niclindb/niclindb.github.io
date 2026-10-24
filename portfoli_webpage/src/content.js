@@ -63,7 +63,8 @@ export const sections = [
     label: 'Skills',
     title: 'Skills',
     // Each skill names where it was used. Getz’s and the AVL tree are from
-    // public/Resume.pdf, Shumaker is from Nick; the rest is this site's own code.
+    // public/Resume.pdf; Shumaker, Node.js, Docker, Python and Java are from
+    // Nick; the rest is this site's own code.
     groups: [
       {
         name: 'Web',
@@ -82,6 +83,7 @@ export const sections = [
           { name: 'Shopify POS', where: 'Automatic discounts, held inventory and charge-account orders at Getz’s' },
           { name: 'GraphQL', where: 'Getz’s custom Shopify extensions' },
           { name: 'Liquid', where: 'Custom point-of-sale features at Getz’s' },
+          { name: 'Node.js', where: 'Getz’s custom Shopify app' },
         ],
       },
       {
@@ -95,11 +97,19 @@ export const sections = [
       {
         name: 'Tools',
         items: [
+          { name: 'Docker', where: 'Getz’s custom Shopify app' },
           { name: 'Git & GitHub', where: 'Version control for this site and my other projects' },
           { name: 'Vite & Vitest', where: 'Building and testing this site, with tests run on every pull request' },
         ],
       },
-      { name: 'Also worked with', items: ['Python', 'Java', 'Node.js', 'TypeScript', 'SQL', 'Docker'] },
+      {
+        name: 'Other languages',
+        items: [
+          { name: 'Python', where: 'Most of my personal projects, including Bracelet Studio' },
+          { name: 'Java', where: 'University class projects' },
+        ],
+      },
+      { name: 'Also worked with', items: ['TypeScript', 'SQL'] },
     ],
   },
   {

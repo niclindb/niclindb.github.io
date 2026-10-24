@@ -12,5 +12,5 @@ test('shows where each skill was used', () => {
 
 test('lists skills without a where as plain chips', () => {
   render(<SectionContent section={skills} />);
-  expect(screen.getByText('Python')).toHaveClass('chip');
+  expect(screen.getByText('SQL')).toHaveClass('chip');
 });
