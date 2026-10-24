@@ -66,6 +66,17 @@ export const sections = [
       {
         school: 'Northern Michigan University',
         degree: 'Bachelor’s degree in Computer Science, Minor in Mathematics',
+        // Honors and coursework are from public/Resume.pdf
+        honors: ['Dean’s List', 'Michigan Achievement Scholarship'],
+        coursework: [
+          'Parallel and Distributed Processing',
+          'Operating Systems',
+          'Data Structures',
+          'Network Programming',
+          'Server-Side Programming',
+          'Linear Algebra',
+          'Probability and Statistics',
+        ],
       },
     ],
   },
