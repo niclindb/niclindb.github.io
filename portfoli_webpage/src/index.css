@@ -134,6 +134,10 @@ body, html, #root {
   margin-bottom: 0;
 }
 
+.card__degree .card__job-stack {
+  margin: 8px 0 10px;
+}
+
 .card__summary {
   margin: 0 0 16px;
   color: var(--ink-soft);

@@ -25,6 +25,23 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
         </ul>
       )}
 
+      {section.jobs && (
+        <ul className="card__degrees">
+          {section.jobs.map((job) => (
+            <li key={job.company} className="card__degree">
+              <p className="card__school">{job.company}</p>
+              <p className="card__degree-name">{job.role}</p>
+              <ul className="card__chips card__job-stack" aria-label="Tech stack">
+                {job.stack.map((item) => <li key={item} className="chip">{item}</li>)}
+              </ul>
+              <ul className="card__list">
+                {job.highlights.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      )}
+
       {section.groups && (
         <dl className="card__groups">
           {section.groups.map((group) => (
