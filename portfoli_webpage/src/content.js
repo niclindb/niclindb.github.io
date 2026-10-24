@@ -9,7 +9,7 @@ export const sections = [
     title: 'About Me',
     // Getz’s facts are from public/Resume.pdf; the Shumaker role is newer than the resume.
     summary:
-      'I’m a web developer intern at Shumaker Tech Group. Before that, starting in March 2022, I wrote the custom Shopify software for Getz’s Clothiers, a clothing store in Marquette, Michigan, while also working its sales floor. Staff there use what I built to sell, price and move stock.',
+      'I’m a web developer intern at Shumaker Tech Group, where I maintain existing websites and build new ones. Before that, starting in March 2022, I wrote the custom Shopify software for Getz’s Clothiers, a clothing store in Marquette, Michigan, while also working its sales floor. Staff there use what I built to sell, price and move stock.',
     highlights: [
       'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
       'An inventory app for moving stock between store locations with barcode scanning',
