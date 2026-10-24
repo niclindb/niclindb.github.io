@@ -18,16 +18,18 @@ export const sections = [
   },
   {
     label: 'React Project',
-    kicker: 'React Project',
+    kicker: 'React Project · Getz’s Clothiers',
     title: 'Custom Shopify Extensions',
-    stack: ['React', 'JavaScript', 'Shopify GraphQL'],
+    // Facts are from public/Resume.pdf; the code is the public niclindb/Getzs-apps repo.
+    summary:
+      'Getz’s Clothiers needed features that Shopify’s point of sale doesn’t have out of the box, so I built them as React extensions for the store’s staff.',
+    stack: ['React', 'JavaScript', 'Shopify POS', 'Shopify GraphQL', 'Liquid'],
     highlights: [
-      'Product price look-up',
-      'Inventory management',
-      'Charge orders',
-      'Barcode printing',
+      'An inventory app for moving stock between store locations: staff scan barcodes, see changes in real time, and their progress is saved as they go',
+      'Point-of-sale features: automatic discounts, held inventory, real-time product cost look-up and charge-account orders',
+      'Product pricing with barcode label printing',
     ],
-    link: github,
+    link: { href: 'https://github.com/niclindb/Getzs-apps', text: 'See the code on GitHub' },
   },
   {
     label: 'C++ Project',
