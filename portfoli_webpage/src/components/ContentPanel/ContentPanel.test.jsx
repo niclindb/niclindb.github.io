@@ -1,6 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import ContentPanel from './ContentPanel';
+import { sections } from '../../content';
+
+const at = (label) => sections.findIndex((s) => s.label === label);
 
 test('shows the selected section with its stack and neighbours', () => {
   const onNavigate = vi.fn();
@@ -22,7 +25,7 @@ test('wraps around and closes with Back or Escape', () => {
   render(<ContentPanel index={0} onClose={onClose} onNavigate={onNavigate} />);
 
   fireEvent.keyDown(window, { key: 'ArrowLeft' });
-  expect(onNavigate).toHaveBeenCalledWith(4, 'prev');
+  expect(onNavigate).toHaveBeenCalledWith(sections.length - 1, 'prev');
 
   fireEvent.click(screen.getByRole('button', { name: 'Back' }));
   fireEvent.keyDown(window, { key: 'Escape' });
@@ -30,14 +33,14 @@ test('wraps around and closes with Back or Escape', () => {
 });
 
 test('lists both degrees in Education', () => {
-  render(<ContentPanel index={4} onClose={() => {}} onNavigate={() => {}} />);
+  render(<ContentPanel index={at('Education')} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByText('Michigan State University')).toBeInTheDocument();
   expect(screen.getByText('Northern Michigan University')).toBeInTheDocument();
   expect(screen.getByText('In progress, 2026')).toBeInTheDocument();
 });
 
 test('shows honors and relevant coursework in Education', () => {
-  render(<ContentPanel index={4} onClose={() => {}} onNavigate={() => {}} />);
+  render(<ContentPanel index={at('Education')} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('list', { name: 'Honors' })).toHaveTextContent('Dean’s List');
   expect(screen.getByText('Parallel and Distributed Processing')).toBeInTheDocument();
 });
@@ -54,14 +57,14 @@ test('shows the merge sort visualizer in the C++ project', () => {
 });
 
 test('opens as a dialog with focus on the section heading', () => {
-  render(<ContentPanel index={3} onClose={() => {}} onNavigate={() => {}} />);
+  render(<ContentPanel index={at('Skills')} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('dialog', { name: 'Skills' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Skills' })).toHaveFocus();
 });
 
 test('keeps focus on the arrow used to move between sections', () => {
   render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByRole('button', { name: /Skills/ })).toHaveFocus();
+  expect(screen.getByRole('button', { name: /Python Project/ })).toHaveFocus();
 });
 
 test('Tab cycles inside the open section', () => {
@@ -85,4 +88,10 @@ test('lists what each job involved and its stack', () => {
   render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByText(/WordPress sites from Figma designs/)).toBeInTheDocument();
   expect(screen.getAllByRole('list', { name: 'Tech stack' })).toHaveLength(2);
+});
+
+test('features Bracelet Studio as the Python project', () => {
+  render(<ContentPanel index={at('Python Project')} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('heading', { name: 'Bracelet Studio' })).toBeInTheDocument();
+  expect(screen.getByText(/Swap out just one color/)).toBeInTheDocument();
 });
