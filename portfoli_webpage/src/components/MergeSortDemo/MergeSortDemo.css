@@ -227,6 +227,19 @@
   }
 }
 
+/* Finger-sized targets on touch screens */
+@media (pointer: coarse) {
+  .sort-demo__play,
+  .sort-demo__ghost {
+    min-height: 44px;
+  }
+
+  .sort-demo__segmented button {
+    min-width: 40px;
+    min-height: 38px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sort-demo__bar {
     transition: none;

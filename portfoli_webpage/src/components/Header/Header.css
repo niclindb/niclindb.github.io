@@ -111,3 +111,47 @@
     display: none;
   }
 }
+
+/* Short landscape phones: a slimmer header leaves room for the content */
+@media (max-height: 500px) {
+  .header {
+    top: 8px;
+  }
+
+  .header__content {
+    padding: 6px 8px 6px 18px;
+  }
+
+  .header__name {
+    font-size: 1.15rem;
+  }
+
+  .header__subtitle {
+    font-size: 0.75rem;
+  }
+}
+
+/* Finger-sized targets on touch screens */
+@media (pointer: coarse) {
+  .header__social-link {
+    min-height: 44px;
+    min-width: 44px;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+}
+
+/* The narrowest phones: keep the name on one line next to the icons */
+@media (max-width: 360px) {
+  .header__content {
+    gap: 8px;
+  }
+
+  .header__name {
+    white-space: nowrap;
+  }
+
+  .header__social-links {
+    gap: 0;
+  }
+}

@@ -23,6 +23,8 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* No grey flash over the canvas and buttons when tapped on phones */
+  -webkit-tap-highlight-color: transparent;
 }
 
 code {
