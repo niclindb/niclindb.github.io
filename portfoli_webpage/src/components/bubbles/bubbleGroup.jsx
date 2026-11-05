@@ -5,16 +5,28 @@ import { useThree } from '@react-three/fiber';
 import { sections } from '../../content';
 
 // Bubbles sit in a centred grid: one row on wide screens, three columns on
-// tablets and two on phones. A wide screen that can't fit the whole row also
-// gets three columns. The last row is centred when it isn't full.
-function gridLayout(aspect, viewWidth, count) {
-  let columns = aspect < 0.8 ? 2 : aspect < 1.3 ? 3 : count;
+// tablets and two on phones. A wide screen that can't fit the whole row
+// splits it into two rows, or three columns if two rows are still too wide.
+// The last row is centred when it isn't full, and the grid shrinks when it's
+// too tall for the screen.
+function gridLayout(aspect, viewWidth, viewHeight, count) {
   // Width of one row of radius-1 bubbles, plus a margin at each edge
-  if (columns === count && count * 2.6 - 0.6 + 1.2 > viewWidth) columns = 3;
-  const radius = columns === 2 ? 0.8 : 1;
-  const gap = columns === 2 ? 0.4 : 0.6;
-  const step = radius * 2 + gap;
+  const rowWidth = (n) => n * 2.6 - 0.6 + 1.2;
+  let columns = aspect < 0.8 ? 2 : aspect < 1.3 ? 3 : count;
+  if (columns === count && rowWidth(count) > viewWidth) {
+    columns = rowWidth(Math.ceil(count / 2)) <= viewWidth ? Math.ceil(count / 2) : 3;
+  }
   const rows = Math.ceil(count / columns);
+  let radius = columns === 2 ? 0.8 : 1;
+  let gap = columns === 2 ? 0.4 : 0.6;
+  // Leave room for the header above and the hint below
+  const room = viewHeight * 0.78;
+  const height = rows * radius * 2 + (rows - 1) * gap;
+  if (height > room) {
+    radius *= room / height;
+    gap *= room / height;
+  }
+  const step = radius * 2 + gap;
   // Nudge the grid down a little so it sits centred below the header
   const top = ((rows - 1) * step) / 2 - 0.3;
 
@@ -31,7 +43,7 @@ function gridLayout(aspect, viewWidth, count) {
 
 export default function BubbleGroup({ onBubbleSelect, selectedBubble, returningBubble, focusedBubble, onLayout }) {
   const { size, camera, viewport } = useThree();
-  const layout = gridLayout(size.width / size.height, viewport.width, sections.length);
+  const layout = gridLayout(size.width / size.height, viewport.width, viewport.height, sections.length);
 
   // Tell the page where each bubble sits on screen, so content can float
   // back to it

@@ -13,7 +13,7 @@ test('shows the selected section with its stack and neighbours', () => {
   expect(screen.getByRole('link', { name: /See the code on GitHub/ }))
     .toHaveAttribute('href', 'https://github.com/niclindb/Getzs-apps');
 
-  fireEvent.click(screen.getByRole('button', { name: /C\+\+ Project/ }));
+  fireEvent.click(screen.getByRole('button', { name: /TypeScript Project/ }));
   expect(onNavigate).toHaveBeenCalledWith(2, 'next');
   fireEvent.click(screen.getByRole('button', { name: /About Me/ }));
   expect(onNavigate).toHaveBeenCalledWith(0, 'prev');
@@ -36,7 +36,7 @@ test('lists both degrees in Education', () => {
   render(<ContentPanel index={at('Education')} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByText('Michigan State University')).toBeInTheDocument();
   expect(screen.getByText('Northern Michigan University')).toBeInTheDocument();
-  expect(screen.getByText('In progress, 2026')).toBeInTheDocument();
+  expect(screen.getByText('Expected May 2028')).toBeInTheDocument();
 });
 
 test('shows honors and relevant coursework in Education', () => {
@@ -51,7 +51,7 @@ test('slides in from the side when moving between sections', () => {
 });
 
 test('shows the merge sort visualizer in the C++ project', () => {
-  render(<ContentPanel index={2} onClose={() => {}} onNavigate={() => {}} />);
+  render(<ContentPanel index={at('C++ Project')} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('figure', { name: 'Parallel merge sort visualizer' })).toBeInTheDocument();
   expect(screen.getByText(/last merge of the two halves runs on one thread/)).toBeInTheDocument();
 });
@@ -63,7 +63,7 @@ test('opens as a dialog with focus on the section heading', () => {
 });
 
 test('keeps focus on the arrow used to move between sections', () => {
-  render(<ContentPanel index={2} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
+  render(<ContentPanel index={at('C++ Project')} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('button', { name: /Python Project/ })).toHaveFocus();
 });
 
@@ -79,15 +79,22 @@ test('Tab cycles inside the open section', () => {
 
 test('leads About Me with work experience', () => {
   render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByText('Shumaker Tech Group')).toBeInTheDocument();
-  expect(screen.getByText('Web Developer Intern')).toBeInTheDocument();
+  expect(screen.getByText('Shumaker Technology Group')).toBeInTheDocument();
+  expect(screen.getByText(/Web Development Intern/)).toBeInTheDocument();
   expect(screen.getByText(/inventory app for moving stock/)).toBeInTheDocument();
 });
 
 test('lists what each job involved and its stack', () => {
   render(<ContentPanel index={0} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByText(/WordPress sites from Figma designs/)).toBeInTheDocument();
-  expect(screen.getAllByRole('list', { name: 'Tech stack' })).toHaveLength(2);
+  expect(screen.getAllByRole('list', { name: 'Tech stack' })).toHaveLength(3);
+  expect(screen.getByText(/ROS 2 for autonomous racing/)).toBeInTheDocument();
+});
+
+test('features Top Ledger as the TypeScript project', () => {
+  render(<ContentPanel index={at('TypeScript Project')} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('heading', { name: 'Top Ledger' })).toBeInTheDocument();
+  expect(screen.getByText('Supabase')).toBeInTheDocument();
 });
 
 test('features Bracelet Studio as the Python project', () => {
