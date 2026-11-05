@@ -1,18 +1,20 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import BubbleMenu from './BubbleMenu';
+import { sections } from '../../content';
 
-const homes = Array.from({ length: 5 }, (_, i) => ({ x: 100 + i * 200, y: 300, radius: 80 }));
+const homes = Array.from({ length: sections.length }, (_, i) => ({ x: 100 + i * 200, y: 300, radius: 80 }));
 
 test('offers every bubble as a button', () => {
   const onSelect = vi.fn();
   render(<BubbleMenu homes={homes} onSelect={onSelect} />);
   const nav = screen.getByRole('navigation', { name: 'Sections' });
   expect(nav).toBeInTheDocument();
-  expect(screen.getAllByRole('button')).toHaveLength(5);
+  expect(screen.getAllByRole('button')).toHaveLength(sections.length);
 
   fireEvent.click(screen.getByRole('button', { name: 'Skills' }));
-  expect(onSelect).toHaveBeenCalledWith(3, homes[3]);
+  const skills = sections.findIndex((s) => s.label === 'Skills');
+  expect(onSelect).toHaveBeenCalledWith(skills, homes[skills]);
 });
 
 test('sits each button over its bubble', () => {
