@@ -98,7 +98,7 @@ export const sections = [
       'Change the order the colors appear in',
       'See every change in the preview straight away',
     ],
-    link: { href: 'https://bracelet-color-studio-lindberg-dev-projects.vercel.app', text: 'Try the live site' },
+    link: { href: 'https://bracelet-color-studio.vercel.app', text: 'Try the live site' },
   },
   {
     label: 'Skills',
