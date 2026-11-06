@@ -117,6 +117,8 @@ export default function Bubble({
 
   const handleClick = (e) => {
     e.stopPropagation();
+    // A drag that starts and ends on a bubble is looking around, not a click
+    if (e.delta > 6) return;
     // Where the bubble is on screen, so the pop can start from there
     drift.current.getWorldPosition(worldPos);
     edgePos.set(worldPos.x + baseScale, worldPos.y, worldPos.z);

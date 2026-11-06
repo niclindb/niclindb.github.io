@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import BubbleGroup from '../bubbles/bubbleGroup'
 import AmbientBubbles from '../bubbles/AmbientBubbles'
+import LookAround from './LookAround'
 
 // Phones have dense screens but weak GPUs, and the glassy bubbles are
 // costly per pixel, so they render at up to 1.5x instead of 2x
@@ -26,6 +27,7 @@ export default function Scene({ paused = false, ...props }) {
       <ambientLight intensity={0.3} />
       <AmbientBubbles />
       <BubbleGroup {...props} />
+      <LookAround disabled={props.selectedBubble != null} paused={paused} />
       {/* Same sky as drei's "dawn" preset, served from this site instead of a CDN */}
       <Environment files={`${import.meta.env.BASE_URL}dawn.hdr`} background blur={0.5} />
     </Canvas>
