@@ -3,6 +3,8 @@ import MergeSortDemo from '../MergeSortDemo/MergeSortDemo';
 // Body of one section card, shared by the bubble panel and the fallback page.
 export default function SectionContent({ section, headingLevel = 'h2', headingId }) {
   const Heading = headingLevel;
+  // Projects inside a section get the next heading level down
+  const SubHeading = `h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`;
 
   return (
     <>
@@ -37,6 +39,31 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
               <ul className="card__list">
                 {job.highlights.map((item) => <li key={item}>{item}</li>)}
               </ul>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {section.projects && (
+        <ul className="card__projects">
+          {section.projects.map((project) => (
+            <li key={project.name} className="card__project">
+              <SubHeading className="card__project-name">{project.name}</SubHeading>
+              {project.context && <p className="card__degree-name">{project.context}</p>}
+              <ul className="card__chips card__job-stack" aria-label={`${project.name} tech stack`}>
+                {project.stack.map((item) => <li key={item} className="chip">{item}</li>)}
+              </ul>
+              <p className="card__summary">{project.summary}</p>
+              <ul className="card__list">
+                {project.highlights.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+              {project.link && (
+                <a className="card__link" href={project.link.href} target="_blank" rel="noopener noreferrer">
+                  {project.link.text}
+                  <span className="visually-hidden"> for {project.name}</span>
+                  <span aria-hidden="true"> →</span>
+                </a>
+              )}
             </li>
           ))}
         </ul>

@@ -26,5 +26,5 @@ test('sits each button over its bubble', () => {
 
 test('returns focus to the bubble the content went back into', () => {
   render(<BubbleMenu homes={homes} onSelect={() => {}} restoreFocusTo={2} />);
-  expect(screen.getByRole('button', { name: 'TypeScript Project' })).toHaveFocus();
+  expect(screen.getByRole('button', { name: 'C++ Project' })).toHaveFocus();
 });
