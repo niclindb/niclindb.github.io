@@ -47,6 +47,43 @@ body, html, #root {
   outline-offset: 2px;
 }
 
+/* Slim, rounded violet scroll bars that match the pill buttons, instead of
+   the default grey bar. Chrome, Edge and Safari use the ::-webkit-scrollbar
+   rules; Firefox, which has no way to round them, gets a thin violet bar. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(109, 79, 216, 0.55) transparent;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  /* The transparent border insets the pill so it floats off the edge */
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #a993f2, var(--accent)) padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  /* Grows a little under the pointer so it is easier to grab */
+  border-width: 2px;
+  background: linear-gradient(180deg, #9277ea, #5a3dc4) padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* Headings focused only so screen readers announce them */
 [tabindex="-1"]:focus {
   outline: none;
