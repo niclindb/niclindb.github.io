@@ -87,9 +87,9 @@ export const sections = [
     label: 'Python Project',
     kicker: 'Python Project',
     title: 'Bracelet Studio',
-    stack: ['Python'],
-    // From Nick (2026-11-04). The source site's name and the framework are
-    // still to confirm, so they're left out. Live link from Nick (2026-11-06).
+    stack: ['Python', 'Flask'],
+    // From Nick (2026-11-04). The source site's name is still to confirm, so
+    // it's left out. Flask and the live link are from Nick (2026-11-06).
     summary:
       'A web app for trying out colors on a bracelet pattern. It takes a design from a bracelet-making website and shows a preview of how it looks in different colors.',
     highlights: [
