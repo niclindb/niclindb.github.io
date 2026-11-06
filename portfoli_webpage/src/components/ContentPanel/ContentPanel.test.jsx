@@ -101,4 +101,8 @@ test('features Bracelet Studio as the Python project', () => {
   render(<ContentPanel index={at('Python Project')} onClose={() => {}} onNavigate={() => {}} />);
   expect(screen.getByRole('heading', { name: 'Bracelet Studio' })).toBeInTheDocument();
   expect(screen.getByText(/Swap out just one color/)).toBeInTheDocument();
+  const live = screen.getByRole('link', { name: 'Try the live site' });
+  expect(live).toHaveAttribute('href', 'https://bracelet-color-studio-lindberg-dev-projects.vercel.app');
+  expect(live).toHaveAttribute('target', '_blank');
+  expect(live).toHaveAttribute('rel', expect.stringContaining('noopener'));
 });

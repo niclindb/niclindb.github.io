@@ -88,8 +88,8 @@ export const sections = [
     kicker: 'Python Project',
     title: 'Bracelet Studio',
     stack: ['Python'],
-    // From Nick (2026-11-04). The source site's name, the framework and any
-    // link are still to confirm, so they're left out.
+    // From Nick (2026-11-04). The source site's name and the framework are
+    // still to confirm, so they're left out. Live link from Nick (2026-11-06).
     summary:
       'A web app for trying out colors on a bracelet pattern. It takes a design from a bracelet-making website and shows a preview of how it looks in different colors.',
     highlights: [
@@ -98,6 +98,7 @@ export const sections = [
       'Change the order the colors appear in',
       'See every change in the preview straight away',
     ],
+    link: { href: 'https://bracelet-color-studio-lindberg-dev-projects.vercel.app', text: 'Try the live site' },
   },
   {
     label: 'Skills',
