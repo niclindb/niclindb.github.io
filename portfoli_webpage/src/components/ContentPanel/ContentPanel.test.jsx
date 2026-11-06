@@ -5,18 +5,16 @@ import { sections } from '../../content';
 
 const at = (label) => sections.findIndex((s) => s.label === label);
 
-test('shows the selected section with its stack and neighbours', () => {
+test('shows the selected section and its neighbours', () => {
   const onNavigate = vi.fn();
-  render(<ContentPanel index={1} onClose={() => {}} onNavigate={onNavigate} />);
-  expect(screen.getByRole('heading', { name: 'Custom Shopify Extensions' })).toBeInTheDocument();
-  expect(screen.getByText('Shopify GraphQL')).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /See the code on GitHub/ }))
-    .toHaveAttribute('href', 'https://github.com/niclindb/Getzs-apps');
+  const index = at('Web Apps');
+  render(<ContentPanel index={index} onClose={() => {}} onNavigate={onNavigate} />);
+  expect(screen.getByRole('heading', { name: 'Web Apps' })).toBeInTheDocument();
 
-  fireEvent.click(screen.getByRole('button', { name: /TypeScript Project/ }));
-  expect(onNavigate).toHaveBeenCalledWith(2, 'next');
+  fireEvent.click(screen.getByRole('button', { name: /C\+\+ Project/ }));
+  expect(onNavigate).toHaveBeenCalledWith(index + 1, 'next');
   fireEvent.click(screen.getByRole('button', { name: /About Me/ }));
-  expect(onNavigate).toHaveBeenCalledWith(0, 'prev');
+  expect(onNavigate).toHaveBeenCalledWith(index - 1, 'prev');
 });
 
 test('wraps around and closes with Back or Escape', () => {
@@ -64,7 +62,7 @@ test('opens as a dialog with focus on the section heading', () => {
 
 test('keeps focus on the arrow used to move between sections', () => {
   render(<ContentPanel index={at('C++ Project')} entrance="next" onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByRole('button', { name: /Python Project/ })).toHaveFocus();
+  expect(screen.getByRole('button', { name: /Skills/ })).toHaveFocus();
 });
 
 test('Tab cycles inside the open section', () => {
@@ -91,17 +89,24 @@ test('lists what each job involved and its stack', () => {
   expect(screen.getByText(/ROS 2 for autonomous racing/)).toBeInTheDocument();
 });
 
-test('features Top Ledger as the TypeScript project', () => {
-  render(<ContentPanel index={at('TypeScript Project')} onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByRole('heading', { name: 'Top Ledger' })).toBeInTheDocument();
-  expect(screen.getByText('Supabase')).toBeInTheDocument();
+test('groups every web app under Web Apps', () => {
+  render(<ContentPanel index={at('Web Apps')} onClose={() => {}} onNavigate={() => {}} />);
+  const names = screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent);
+  expect(names).toEqual(['Custom Shopify Extensions', 'Top Ledger', 'Bracelet Studio']);
+  const labels = sections.map((s) => s.label);
+  ['React Project', 'TypeScript Project', 'Python Project'].forEach((old) => expect(labels).not.toContain(old));
 });
 
-test('features Bracelet Studio as the Python project', () => {
-  render(<ContentPanel index={at('Python Project')} onClose={() => {}} onNavigate={() => {}} />);
-  expect(screen.getByRole('heading', { name: 'Bracelet Studio' })).toBeInTheDocument();
+test('gives each web app its own stack and links', () => {
+  render(<ContentPanel index={at('Web Apps')} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('list', { name: 'Top Ledger tech stack' })).toHaveTextContent('Supabase');
+  expect(screen.getByRole('list', { name: 'Bracelet Studio tech stack' })).toHaveTextContent('Flask');
+  expect(screen.getByRole('list', { name: 'Custom Shopify Extensions tech stack' })).toHaveTextContent('Shopify GraphQL');
   expect(screen.getByText(/Swap out just one color/)).toBeInTheDocument();
-  const live = screen.getByRole('link', { name: 'Try the live site' });
+
+  expect(screen.getByRole('link', { name: /See the code on GitHub/ }))
+    .toHaveAttribute('href', 'https://github.com/niclindb/Getzs-apps');
+  const live = screen.getByRole('link', { name: /Try the live site\s+for Bracelet Studio/ });
   expect(live).toHaveAttribute('href', 'https://bracelet-color-studio.vercel.app');
   expect(live).toHaveAttribute('target', '_blank');
   expect(live).toHaveAttribute('rel', expect.stringContaining('noopener'));

@@ -40,32 +40,51 @@ export const sections = [
     ],
   },
   {
-    label: 'React Project',
-    kicker: 'React Project · Getz’s Clothiers',
-    title: 'Custom Shopify Extensions',
-    // Facts are from public/Resume.pdf; the code is the public niclindb/Getzs-apps repo.
-    summary:
-      'Getz’s Clothiers needed features that Shopify’s point of sale doesn’t have out of the box, so I built them as React extensions for the store’s staff.',
-    stack: ['React', 'JavaScript', 'Shopify POS', 'Shopify GraphQL', 'Liquid'],
-    highlights: [
-      'An inventory app for moving stock between inventory locations: staff scan barcodes, see changes in real time, and their progress is saved as they go',
-      'Point-of-sale features: automatic discounts, held inventory, real-time product cost look-up and charge-account orders',
-      'Product pricing with barcode label printing',
-    ],
-    link: { href: 'https://github.com/niclindb/Getzs-apps', text: 'See the code on GitHub' },
-  },
-  {
-    label: 'TypeScript Project',
-    kicker: 'TypeScript Project',
-    title: 'Top Ledger',
-    // From public/Resume.pdf. No public link yet.
-    summary:
-      'A full-stack sports betting tracker. Users place simulated bets and follow their profit and loss in real time.',
-    stack: ['React', 'TypeScript', 'Supabase', 'PostgreSQL'],
-    highlights: [
-      'Live odds and game updates pulled from external sports data APIs',
-      'Sign-in handled by Supabase authentication',
-      'Users and their wagers stored as related tables in PostgreSQL',
+    label: 'Web Apps',
+    title: 'Web Apps',
+    // Every web app in one place, each with its own stack and links.
+    projects: [
+      {
+        name: 'Custom Shopify Extensions',
+        context: 'Built for Getz’s Clothiers',
+        // Facts are from public/Resume.pdf; the code is the public niclindb/Getzs-apps repo.
+        summary:
+          'Getz’s Clothiers needed features that Shopify’s point of sale doesn’t have out of the box, so I built them as React extensions for the store’s staff.',
+        stack: ['React', 'JavaScript', 'Shopify POS', 'Shopify GraphQL', 'Liquid'],
+        highlights: [
+          'An inventory app for moving stock between inventory locations: staff scan barcodes, see changes in real time, and their progress is saved as they go',
+          'Point-of-sale features: automatic discounts, held inventory, real-time product cost look-up and charge-account orders',
+          'Product pricing with barcode label printing',
+        ],
+        link: { href: 'https://github.com/niclindb/Getzs-apps', text: 'See the code on GitHub' },
+      },
+      {
+        name: 'Top Ledger',
+        // From public/Resume.pdf. No public link yet.
+        summary:
+          'A full-stack sports betting tracker. Users place simulated bets and follow their profit and loss in real time.',
+        stack: ['React', 'TypeScript', 'Supabase', 'PostgreSQL'],
+        highlights: [
+          'Live odds and game updates pulled from external sports data APIs',
+          'Sign-in handled by Supabase authentication',
+          'Users and their wagers stored as related tables in PostgreSQL',
+        ],
+      },
+      {
+        name: 'Bracelet Studio',
+        // From Nick (2026-11-04). The source site's name is still to confirm, so
+        // it's left out. Flask and the live link are from Nick (2026-11-06).
+        summary:
+          'A web app for trying out colors on a bracelet pattern. It takes a design from a bracelet-making website and shows a preview of how it looks in different colors.',
+        stack: ['Python', 'Flask'],
+        highlights: [
+          'Generate a random set of colors for the whole pattern',
+          'Swap out just one color and keep the rest',
+          'Change the order the colors appear in',
+          'See every change in the preview straight away',
+        ],
+        link: { href: 'https://bracelet-color-studio.vercel.app', text: 'Try the live site' },
+      },
     ],
   },
   {
@@ -82,23 +101,6 @@ export const sections = [
       'Each merge round halves the number of busy threads, and the last merge of the two halves runs on one thread, which is what limits the speedup',
       'The visualizer above counts every comparison as a step, so the speedup it shows is measured against one thread sorting the same array',
     ],
-  },
-  {
-    label: 'Python Project',
-    kicker: 'Python Project',
-    title: 'Bracelet Studio',
-    stack: ['Python', 'Flask'],
-    // From Nick (2026-11-04). The source site's name is still to confirm, so
-    // it's left out. Flask and the live link are from Nick (2026-11-06).
-    summary:
-      'A web app for trying out colors on a bracelet pattern. It takes a design from a bracelet-making website and shows a preview of how it looks in different colors.',
-    highlights: [
-      'Generate a random set of colors for the whole pattern',
-      'Swap out just one color and keep the rest',
-      'Change the order the colors appear in',
-      'See every change in the preview straight away',
-    ],
-    link: { href: 'https://bracelet-color-studio.vercel.app', text: 'Try the live site' },
   },
   {
     label: 'Skills',
