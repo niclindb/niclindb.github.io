@@ -5,21 +5,31 @@ export const sections = [
   {
     label: 'About Me',
     title: 'About Me',
-    // Getz’s facts are from public/Resume.pdf; the Shumaker role is newer than the resume
-    // and its wording is from Nick. Client sites aren't named.
+    // Roles and dates are from public/Resume.pdf; the Figma and municipality
+    // details are from Nick. Client sites aren't named.
     jobs: [
       {
-        company: 'Shumaker Tech Group',
-        role: 'Web Developer Intern',
+        company: 'Shumaker Technology Group',
+        role: 'Web Development Intern · September 2026 to present',
         stack: ['WordPress', 'Figma'],
         highlights: [
-          'Build new WordPress sites from Figma designs, mostly for municipalities and townships',
-          'Keep live client sites current with page changes and announcements',
+          'Build new responsive, WCAG-accessible WordPress sites from Figma designs, mostly for municipalities and townships',
+          'Maintain live client sites, from page changes and announcements to support tickets',
+        ],
+      },
+      {
+        company: 'Michigan State University · Biosystems & Agricultural Engineering',
+        role: 'Student Research Assistant · June to August 2026',
+        stack: ['ROS 2', 'TensorRT'],
+        highlights: [
+          'Integrated a 3D opponent detection model into ROS 2 for autonomous racing',
+          'Optimized it with TensorRT to run inference in under 6 ms',
+          'Checked detection and position accuracy against ground-truth benchmarks so it could be trusted in real-time racing',
         ],
       },
       {
         company: 'Getz’s Clothiers · Marquette, Michigan',
-        role: 'Software Developer · from March 2022',
+        role: 'Software Developer · March 2022 to May 2026',
         stack: ['Shopify', 'React', 'Liquid'],
         highlights: [
           'Point-of-sale features: automatic discounts, held inventory, product cost look-up and charge-account orders',
@@ -43,6 +53,20 @@ export const sections = [
       'Product pricing with barcode label printing',
     ],
     link: { href: 'https://github.com/niclindb/Getzs-apps', text: 'See the code on GitHub' },
+  },
+  {
+    label: 'TypeScript Project',
+    kicker: 'TypeScript Project',
+    title: 'Top Ledger',
+    // From public/Resume.pdf. No public link yet.
+    summary:
+      'A full-stack sports betting tracker. Users place simulated bets and follow their profit and loss in real time.',
+    stack: ['React', 'TypeScript', 'Supabase', 'PostgreSQL'],
+    highlights: [
+      'Live odds and game updates pulled from external sports data APIs',
+      'Sign-in handled by Supabase authentication',
+      'Users and their wagers stored as related tables in PostgreSQL',
+    ],
   },
   {
     label: 'C++ Project',
@@ -78,19 +102,29 @@ export const sections = [
   {
     label: 'Skills',
     title: 'Skills',
-    // Each skill names where it was used. Getz’s and the AVL tree are from
-    // public/Resume.pdf; Shumaker, Node.js, Docker, Python and Java are from
-    // Nick; the rest is this site's own code.
+    // Each skill names where it was used. Getz’s, Top Ledger and the research
+    // job are from public/Resume.pdf (the AVL tree from the earlier resume);
+    // Figma, Node.js, Docker, Python and Java are from Nick; the rest is this
+    // site's own code.
     groups: [
       {
         name: 'Web',
         items: [
           { name: 'React', where: 'Shopify extensions at Getz’s Clothiers, and this site' },
+          { name: 'TypeScript', where: 'Top Ledger, a full-stack betting tracker' },
           { name: 'JavaScript', where: 'Getz’s Shopify tools, and this site' },
           { name: 'HTML & CSS', where: 'The layout and glass styling of this site' },
-          { name: 'WordPress', where: 'Building and updating client sites at Shumaker Tech Group' },
+          { name: 'WordPress', where: 'Building and updating client sites at Shumaker Technology Group' },
           { name: 'Figma', where: 'Turning designs into WordPress sites at Shumaker' },
           { name: 'Three.js', where: 'The 3D bubbles on this site, with React Three Fiber' },
+        ],
+      },
+      {
+        name: 'Data',
+        items: [
+          { name: 'SQL & PostgreSQL', where: 'Users and wagers as related tables in Top Ledger' },
+          { name: 'Supabase', where: 'Authentication and database for Top Ledger' },
+          { name: 'REST APIs', where: 'Live odds and game data in Top Ledger' },
         ],
       },
       {
@@ -108,6 +142,7 @@ export const sections = [
           { name: 'C++', where: 'The parallel merge sort here, and an AVL tree database' },
           { name: 'Parallel programming', where: 'The merge sort, and NMU’s Parallel and Distributed Processing course' },
           { name: 'Data structures', where: 'A self-balancing AVL tree for storing and searching records' },
+          { name: 'ROS 2', where: 'A real-time 3D opponent detector for autonomous racing at MSU, sped up with TensorRT' },
         ],
       },
       {
@@ -125,7 +160,6 @@ export const sections = [
           { name: 'Java', where: 'University class projects' },
         ],
       },
-      { name: 'Also worked with', items: ['TypeScript', 'SQL'] },
     ],
   },
   {
@@ -134,15 +168,17 @@ export const sections = [
     degrees: [
       {
         school: 'Michigan State University',
-        degree: 'Master’s degree in Computer Science',
-        note: 'In progress, 2026',
+        degree: 'Master of Science in Computer Science',
+        note: 'Expected May 2028',
       },
       {
         school: 'Northern Michigan University',
-        degree: 'Bachelor’s degree in Computer Science, Minor in Mathematics',
+        degree: 'Bachelor of Science in Computer Science, Minor in Mathematics',
+        note: 'Graduated 2026 · GPA 3.70',
         // Honors and coursework are from public/Resume.pdf
         honors: ['Dean’s List', 'Michigan Achievement Scholarship'],
         coursework: [
+          'Artificial Intelligence',
           'Parallel and Distributed Processing',
           'Operating Systems',
           'Data Structures',

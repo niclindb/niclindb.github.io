@@ -11,6 +11,7 @@ test('shows where each skill was used', () => {
 });
 
 test('lists skills without a where as plain chips', () => {
-  render(<SectionContent section={skills} />);
-  expect(screen.getByText('SQL')).toHaveClass('chip');
+  const section = { title: 'Skills', groups: [{ name: 'Also worked with', items: ['Rust'] }] };
+  render(<SectionContent section={section} />);
+  expect(screen.getByText('Rust')).toHaveClass('chip');
 });
