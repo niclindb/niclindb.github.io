@@ -111,3 +111,16 @@ test('gives each web app its own stack and links', () => {
   expect(live).toHaveAttribute('target', '_blank');
   expect(live).toHaveAttribute('rel', expect.stringContaining('noopener'));
 });
+
+test('a link to one app scrolls to it and marks it', () => {
+  const scrolled = vi.fn();
+  Element.prototype.scrollIntoView = scrolled;
+  render(
+    <ContentPanel index={at('Web Apps')} linkedProject="bracelet-studio" onClose={() => {}} onNavigate={() => {}} />
+  );
+  const heading = screen.getByRole('heading', { name: 'Bracelet Studio' });
+  expect(heading).toHaveFocus();
+  expect(heading.closest('li')).toHaveClass('card__project--linked');
+  expect(scrolled).toHaveBeenCalled();
+  delete Element.prototype.scrollIntoView;
+});

@@ -10,7 +10,7 @@ const HOME_BUBBLE_SIZE = 180;
 // entrance is 'pop' after a bubble bursts, or 'next'/'prev' when moving
 // between sections. home is where the bubble lives on screen, so that Back
 // can shrink the content into a bubble and float it back there.
-export default function ContentPanel({ index, entrance = 'pop', home, onClose, onNavigate }) {
+export default function ContentPanel({ index, entrance = 'pop', home, linkedProject = null, onClose, onNavigate }) {
   const section = sections[index];
   const prev = (index - 1 + sections.length) % sections.length;
   const next = (index + 1) % sections.length;
@@ -76,13 +76,20 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
   }, [closing]);
 
   // Move focus into the content as it appears: to the heading after a pop,
-  // or back to the arrow that was used when moving between sections
+  // or back to the arrow that was used when moving between sections. A link
+  // to one project (e.g. #bracelet-studio) scrolls to that project instead.
   useEffect(() => {
+    const project = linkedProject && panelRef.current?.querySelector(`#project-${linkedProject}`);
+    if (project) {
+      project.querySelector('.card__project-name')?.focus({ preventScroll: true });
+      project.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      return;
+    }
     const target = entrance === 'next' ? nextRef.current
       : entrance === 'prev' ? prevRef.current
       : panelRef.current?.querySelector('#panel-title');
     target?.focus({ preventScroll: true });
-  }, [index, entrance]);
+  }, [index, entrance, linkedProject]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -119,7 +126,7 @@ export default function ContentPanel({ index, entrance = 'pop', home, onClose, o
         </button>
 
         <div className="panel__body">
-          <SectionContent section={section} headingId="panel-title" />
+          <SectionContent section={section} headingId="panel-title" linkedProject={linkedProject} />
         </div>
 
         <nav className="panel__nav" aria-label="Sections">

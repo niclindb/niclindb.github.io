@@ -1,7 +1,7 @@
 import MergeSortDemo from '../MergeSortDemo/MergeSortDemo';
 
 // Body of one section card, shared by the bubble panel and the fallback page.
-export default function SectionContent({ section, headingLevel = 'h2', headingId }) {
+export default function SectionContent({ section, headingLevel = 'h2', headingId, linkedProject = null }) {
   const Heading = headingLevel;
   // Projects inside a section get the next heading level down
   const SubHeading = `h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`;
@@ -47,8 +47,14 @@ export default function SectionContent({ section, headingLevel = 'h2', headingId
       {section.projects && (
         <ul className="card__projects">
           {section.projects.map((project) => (
-            <li key={project.name} className="card__project">
-              <SubHeading className="card__project-name">{project.name}</SubHeading>
+            <li
+              key={project.name}
+              // headingId is only set in the open panel, so the fallback page
+              // doesn't repeat the ids
+              id={headingId && project.slug ? `project-${project.slug}` : undefined}
+              className={`card__project${project.slug === linkedProject ? ' card__project--linked' : ''}`}
+            >
+              <SubHeading className="card__project-name" tabIndex={headingId ? -1 : undefined}>{project.name}</SubHeading>
               {project.context && <p className="card__degree-name">{project.context}</p>}
               <ul className="card__chips card__job-stack" aria-label={`${project.name} tech stack`}>
                 {project.stack.map((item) => <li key={item} className="chip">{item}</li>)}
