@@ -199,6 +199,31 @@ body, html, #root {
   color: var(--ink);
 }
 
+/* Room for the sticky Back button when a link scrolls to a project */
+.card__project {
+  scroll-margin-top: 72px;
+}
+
+.card__project-name:focus {
+  outline: none;
+}
+
+/* The project a visitor followed a link to glows for a moment, so they can
+   see it's the app they came from */
+.card__project--linked {
+  border-radius: 14px;
+  animation: linked-glow 2.6s ease-out 0.4s both;
+}
+
+@keyframes linked-glow {
+  0%, 40% { background-color: var(--accent-soft); box-shadow: 0 0 0 10px var(--accent-soft); }
+  100% { background-color: transparent; box-shadow: 0 0 0 10px transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__project--linked { animation: none; }
+}
+
 .card__project .card__job-stack {
   margin: 8px 0 10px;
 }

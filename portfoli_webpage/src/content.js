@@ -4,6 +4,8 @@
 export const sections = [
   {
     label: 'About Me',
+    // Opens this section from a link: niclindb.github.io/#about-me
+    slug: 'about-me',
     title: 'About Me',
     // Roles and dates are from public/Resume.pdf; the Figma and municipality
     // details are from Nick. Client sites aren't named.
@@ -41,11 +43,14 @@ export const sections = [
   },
   {
     label: 'Web Apps',
+    // Opens this section from a link: niclindb.github.io/#web-apps
+    slug: 'web-apps',
     title: 'Web Apps',
     // Every web app in one place, each with its own stack and links.
     projects: [
       {
         name: 'Custom Shopify Extensions',
+        slug: 'shopify-extensions',
         context: 'Built for Getz’s Clothiers',
         // Facts are from public/Resume.pdf; the code is the public niclindb/Getzs-apps repo.
         summary:
@@ -60,6 +65,7 @@ export const sections = [
       },
       {
         name: 'Top Ledger',
+        slug: 'top-ledger',
         // From public/Resume.pdf. No public link yet.
         summary:
           'A full-stack sports betting tracker. Users place simulated bets and follow their profit and loss in real time.',
@@ -72,6 +78,7 @@ export const sections = [
       },
       {
         name: 'Bracelet Studio',
+        slug: 'bracelet-studio',
         // From Nick (2026-11-04). The source site's name is still to confirm, so
         // it's left out. Flask and the live link are from Nick (2026-11-06).
         summary:
@@ -89,6 +96,8 @@ export const sections = [
   },
   {
     label: 'C++ Project',
+    // Opens this section from a link: niclindb.github.io/#merge-sort
+    slug: 'merge-sort',
     kicker: 'C++ Project',
     title: 'Parallel Merge Sort',
     stack: ['C++'],
@@ -104,6 +113,8 @@ export const sections = [
   },
   {
     label: 'Skills',
+    // Opens this section from a link: niclindb.github.io/#skills
+    slug: 'skills',
     title: 'Skills',
     // Each skill names where it was used. Getz’s, Top Ledger and the research
     // job are from public/Resume.pdf (the AVL tree from the earlier resume);
@@ -167,6 +178,8 @@ export const sections = [
   },
   {
     label: 'Education',
+    // Opens this section from a link: niclindb.github.io/#education
+    slug: 'education',
     title: 'Education',
     degrees: [
       {
