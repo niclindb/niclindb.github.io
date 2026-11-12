@@ -92,13 +92,14 @@ test('lists what each job involved and its stack', () => {
 test('groups every web app under Web Apps', () => {
   render(<ContentPanel index={at('Web Apps')} onClose={() => {}} onNavigate={() => {}} />);
   const names = screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent);
-  expect(names).toEqual(['Custom Shopify Extensions', 'Top Ledger', 'Bracelet Studio']);
+  expect(names).toEqual(['Northern Oasis Camping', 'Custom Shopify Extensions', 'Top Ledger', 'Bracelet Studio']);
   const labels = sections.map((s) => s.label);
   ['React Project', 'TypeScript Project', 'Python Project'].forEach((old) => expect(labels).not.toContain(old));
 });
 
 test('gives each web app its own stack and links', () => {
   render(<ContentPanel index={at('Web Apps')} onClose={() => {}} onNavigate={() => {}} />);
+  expect(screen.getByRole('list', { name: 'Northern Oasis Camping tech stack' })).toHaveTextContent('Stripe');
   expect(screen.getByRole('list', { name: 'Top Ledger tech stack' })).toHaveTextContent('Supabase');
   expect(screen.getByRole('list', { name: 'Bracelet Studio tech stack' })).toHaveTextContent('Flask');
   expect(screen.getByRole('list', { name: 'Custom Shopify Extensions tech stack' })).toHaveTextContent('Shopify GraphQL');

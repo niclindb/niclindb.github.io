@@ -49,6 +49,22 @@ export const sections = [
     // Every web app in one place, each with its own stack and links.
     projects: [
       {
+        name: 'Northern Oasis Camping',
+        slug: 'northern-oasis-camping',
+        context: 'Built for a campsite in Michigan’s Upper Peninsula',
+        // From Nick (2026-11-12). No live link yet.
+        summary:
+          'A direct-booking website for a dispersed campsite, so the owner takes reservations without going through a marketplace. Guests pick their dates on one calendar, choose sites and add-ons like canoe rentals and firewood, and pay by card.',
+        stack: ['React', 'TypeScript', 'Vite', 'Stripe', 'Postgres (Neon)', 'Vercel'],
+        highlights: [
+          'Live availability across 5 sites, with per-night limits on rental gear',
+          'Sites are held for 10 minutes during checkout so two guests can’t book the same night',
+          'Stripe handles payments and refunds, and a fully refunded booking cancels itself',
+          'Guests get a confirmation email, and the owner is alerted if a paid booking ever fails to confirm',
+          'Mobile-first pages, pre-rendered for fast loading and search',
+        ],
+      },
+      {
         name: 'Custom Shopify Extensions',
         slug: 'shopify-extensions',
         context: 'Built for Getz’s Clothiers',
