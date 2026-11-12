@@ -52,7 +52,7 @@ export const sections = [
         name: 'Northern Oasis Camping',
         slug: 'northern-oasis-camping',
         context: 'Built for a campsite in Michigan’s Upper Peninsula',
-        // From Nick (2026-11-12). No live link yet.
+        // From Nick (2026-11-12), including the live link.
         summary:
           'A direct-booking website for a dispersed campsite, so the owner takes reservations without going through a marketplace. Guests pick their dates on one calendar, choose sites and add-ons like canoe rentals and firewood, and pay by card.',
         stack: ['React', 'TypeScript', 'Vite', 'Stripe', 'Postgres (Neon)', 'Vercel'],
@@ -63,6 +63,7 @@ export const sections = [
           'Guests get a confirmation email, and the owner is alerted if a paid booking ever fails to confirm',
           'Mobile-first pages, pre-rendered for fast loading and search',
         ],
+        link: { href: 'https://northernoasis-sigma.vercel.app', text: 'Try the live site' },
       },
       {
         name: 'Custom Shopify Extensions',

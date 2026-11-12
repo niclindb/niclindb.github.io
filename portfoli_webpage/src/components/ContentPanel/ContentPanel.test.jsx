@@ -107,6 +107,8 @@ test('gives each web app its own stack and links', () => {
 
   expect(screen.getByRole('link', { name: /See the code on GitHub/ }))
     .toHaveAttribute('href', 'https://github.com/niclindb/Getzs-apps');
+  expect(screen.getByRole('link', { name: /Try the live site\s+for Northern Oasis Camping/ }))
+    .toHaveAttribute('href', 'https://northernoasis-sigma.vercel.app');
   const live = screen.getByRole('link', { name: /Try the live site\s+for Bracelet Studio/ });
   expect(live).toHaveAttribute('href', 'https://bracelet-color-studio.vercel.app');
   expect(live).toHaveAttribute('target', '_blank');
