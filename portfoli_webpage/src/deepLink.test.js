@@ -17,6 +17,7 @@ test('a section link opens that section', () => {
 test('a project link opens its section at that project', () => {
   expect(parseHash('#bracelet-studio')).toEqual({ index: at('Web Apps'), project: 'bracelet-studio' });
   expect(parseHash('#top-ledger')).toEqual({ index: at('Web Apps'), project: 'top-ledger' });
+  expect(parseHash('#northern-oasis-camping')).toEqual({ index: at('Web Apps'), project: 'northern-oasis-camping' });
 });
 
 test('unknown or empty links leave the bubbles showing', () => {
